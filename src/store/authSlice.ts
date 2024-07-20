@@ -47,8 +47,8 @@ export const signup = createAsyncThunk(
       // const { accessToken, userInfo } = response.data.data
       // const { message } = response.data.message
       // dispatch(setUser(userInfo))
-      const { username, email } = response.data.data; // Adjust according to your API response
-      return { message, username, email };
+      const { username, email } = response.data.data // Adjust according to your API response
+      return { message, username, email }
       // return { message }
     } catch (err) {
       const error = err as { response?: { data?: { message?: string } } }
