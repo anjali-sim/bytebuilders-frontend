@@ -1,15 +1,129 @@
-import React from 'react'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
+import { z } from 'zod'
 
-const Signup = () => {
+import { Button } from '@/components/ui/button'
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage
+} from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
+import { Card } from '@/components/ui/card'
+
+const passwordSchema = z
+  .string()
+  .min(6, { message: 'Password must be at least 6 characters.' })
+  .regex(/[a-z]/, { message: 'Password must contain at least one lowercase letter.' })
+  .regex(/[A-Z]/, { message: 'Password must contain at least one uppercase letter.' })
+  .regex(/[0-9]/, { message: 'Password must contain at least one number.' })
+  .regex(/[^a-zA-Z0-9]/, { message: 'Password must contain at least one special character.' });
+
+const formSchema = z
+  .object({
+    username: z.string().min(4, {
+      message: 'Username must be at least 4 characters.'
+    }),
+    email: z.string().email({
+      message: 'Invalid email address.'
+    }),
+    password: passwordSchema,
+    confirmPassword: passwordSchema
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords don't match",
+    path: ['confirmPassword']
+  })
+
+function Signup() {
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      username: '',
+      email: ''
+    }
+  })
+
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    console.log(values)
+  }
   return (
-    <div>
-      Signup Page
+    <div className=" p-8 h-[100vh] w-[100vw] flex justify-center items-center">
+      <Card>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+            <FormField
+              control={form.control}
+              name="username"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Username</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Enter your username" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Enter your email" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Password</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Enter your password" {...field} type='password' />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="confirmPassword"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Confirm Password</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="Enter your confirm password"
+                      {...field}
+                      type='password'
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <Button type="submit">Submit</Button>
+          </form>
+        </Form>
+      </Card>
     </div>
   )
 }
 
 export default Signup
-
 
 // import { Col, DatePicker, Form, Flex, Row, Typography } from 'antd'
 // import { Link, useNavigate } from 'react-router-dom'
