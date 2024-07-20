@@ -5,8 +5,6 @@ type FilterOptions = {
   diet: string[]
   allergies: string[]
   cuisines: string[]
-  cookingTime: string[]
-  meals: string[]
 }
 
 type FiltersState = {
@@ -23,26 +21,13 @@ export const Filterbar: React.FC = () => {
       'Gluten Free'
     ],
     allergies: ['Peanuts', 'Dairy', 'Gluten', 'Shellfish', 'Soy'],
-    cuisines: ['Italian', 'Mexican', 'Chinese', 'Indian', 'American'],
-    cookingTime: ['< 30 minutes', '30-60 minutes', '> 60 minutes'],
-    meals: [
-      'Main course',
-      'Dessert',
-      'Appetizer',
-      'Salad',
-      'Breakfast',
-      'Soup',
-      'Beverage',
-      'Snack'
-    ]
+    cuisines: ['Italian', 'Mexican', 'Chinese', 'Indian', 'American', 'Thai']
   }
 
   const [filters, setFilters] = useState<FiltersState>({
     diet: [],
     allergies: [],
-    cuisines: [],
-    cookingTime: [],
-    meals: []
+    cuisines: []
   })
 
   const handleCheckboxChange = (

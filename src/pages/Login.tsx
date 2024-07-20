@@ -53,7 +53,7 @@ function Login() {
         <CardHeader className='text-center'>
           <CardTitle className="text-2xl font-bold text-primary mb-2">Login</CardTitle>
           <CardDescription className="text-gray-500 mb-6">
-            Please enter your email and password to login.
+            Hi, Welcome Back!
           </CardDescription>
         </CardHeader>
         <Form {...form}>
