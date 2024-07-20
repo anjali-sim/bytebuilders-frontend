@@ -2,10 +2,11 @@ import './App.css'
 import { createBrowserRouter, RouteObject, RouterProvider } from 'react-router-dom'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
-import ProtectedRoute from './routes/ProtectedRoute'
+// import ProtectedRoute from './routes/ProtectedRoute'
 import Layout from './pages/Layout'
 import Home from './pages/Home'
 import NotFound from './pages/NotFound'
+import Preferences from './pages/Preference'
 
 function App() {
   const routes: RouteObject[] = [
@@ -42,7 +43,7 @@ function App() {
   return (
     <>
     <RouterProvider router={router} />
-    {/* <Login /> */}
+    <Preferences />
     </>
   )
 }

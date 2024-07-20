@@ -86,7 +86,6 @@
 
 
 import axios from 'axios';
-import { API_PATHS } from '../constants/apiPaths';
 import { getCookie } from '@/lib/getCookie';
 
 const baseURL = import.meta.env.VITE_API_URL || 'http://jsonplaceholder.typicode.com';
