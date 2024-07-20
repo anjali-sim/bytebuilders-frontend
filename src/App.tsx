@@ -1,21 +1,25 @@
-import './App.css'
-import { createBrowserRouter, RouteObject, RouterProvider } from 'react-router-dom'
+import {
+  createBrowserRouter,
+  RouteObject,
+  RouterProvider
+} from 'react-router-dom'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
 import ProtectedRoute from './routes/ProtectedRoute'
 import Layout from './pages/Layout'
 import Home from './pages/Home'
 import NotFound from './pages/NotFound'
+import RecipePage from './components/RecipePage'
 
 function App() {
   const routes: RouteObject[] = [
     {
       path: '/login',
-      element: <Login />,
+      element: <Login />
     },
     {
       path: '/signup',
-      element: <Signup />,
+      element: <Signup />
     },
     {
       path: '/',
@@ -26,23 +30,26 @@ function App() {
       ),
       children: [
         {
-          path: '/home',
-          element: <Home />,
+          path: '/',
+          element: <Home />
+        },
+        {
+          path: '/recipe/:id',
+          element: <RecipePage />
         },
         {
           path: '*',
-          element: <NotFound />,
-        },
-      ],
-    },
-  ];
-  
-  const router = createBrowserRouter(routes);
+          element: <NotFound />
+        }
+      ]
+    }
+  ]
+
+  const router = createBrowserRouter(routes)
 
   return (
     <>
-    <RouterProvider router={router} />
-    {/* <Login /> */}
+      <RouterProvider router={router} />
     </>
   )
 }
