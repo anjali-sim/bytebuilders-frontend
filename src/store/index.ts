@@ -9,6 +9,7 @@ export const store = configureStore({
   reducer: {
     user: userSlice,
     auth: authSlice,
+    loading: loadingSlice
     preferences: preferenceSlice,
     recipe: recipeSlice
   }

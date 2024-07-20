@@ -20,12 +20,12 @@
 
 // const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
 //     const isAuthenticated = useAppSelector((state: RootState) => state.auth.isAuthenticated);
-  
+
 //     if (!isAuthenticated) {
 //       return <Navigate to="/login" replace />;
 //     }
-  
+
 //     return <>{children}</>;
 //   };
-  
+
 //   export default ProtectedRoute;

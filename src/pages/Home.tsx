@@ -22,7 +22,7 @@ const Home = () => {
 
   return (
     <div>
-      <SearchBar />
+      <SearchBar origin="home" />
       <div className="max-w-7xl mx-auto flex">
         <Filterbar />
         {!isLoad ? <RecipeList /> : <Loading />}
