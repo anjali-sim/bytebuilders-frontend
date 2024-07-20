@@ -84,11 +84,11 @@
 
 // export default axiosInstance
 
+import axios from 'axios'
+import { getCookie } from '@/lib/getCookie'
 
-import axios from 'axios';
-import { getCookie } from '@/lib/getCookie';
-
-const baseURL = import.meta.env.VITE_API_URL || 'http://jsonplaceholder.typicode.com';
+const baseURL =
+  import.meta.env.VITE_API_URL || 'http://jsonplaceholder.typicode.com'
 
 const axiosInstance = axios.create({
   baseURL,
@@ -96,30 +96,30 @@ const axiosInstance = axios.create({
   headers: {
     'Content-Type': 'application/json'
   }
-});
+})
 
 axiosInstance.interceptors.request.use(
   async (config) => {
     if (!config.withoutAuth) {
-      const token = getCookie('access_token');
+      const token = getCookie('access_token')
       if (token) {
-        config.headers.Authorization = `Bearer ${token}`;
+        config.headers.Authorization = `Bearer ${token}`
       }
     }
-    return config;
+    return config
   },
   (error) => {
-    return Promise.reject(error);
+    return Promise.reject(error)
   }
-);
+)
 
 axiosInstance.interceptors.response.use(
   (response) => {
-    return response;
+    return response
   },
   (error) => {
-    return Promise.reject(error);
+    return Promise.reject(error)
   }
-);
+)
 
-export default axiosInstance;
+export default axiosInstance

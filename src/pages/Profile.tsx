@@ -1,4 +1,4 @@
-import { CardTitle, CardDescription, Card } from '@/components/ui/card'
+import { CardTitle, Card } from '@/components/ui/card'
 import {
   Breadcrumb,
   BreadcrumbItem,

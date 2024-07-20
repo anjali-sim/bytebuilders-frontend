@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axiosInstance from '../utility/api'
 import { API_PATHS } from '../constants/apiPaths'
 import { RootState } from './index'
-import { setUser, clearUser } from './userSlice'
+import { clearUser } from './userSlice'
 
 interface SignupData {
   username: string
@@ -15,27 +15,31 @@ interface LoginData {
   password: string
 }
 
-interface AuthState {
+export interface AuthState {
   loading: boolean
   error: string | null
   success: boolean
   message: string
+  username: string | null
+  email: string | null
 }
 
 const initialState: AuthState = {
   loading: false,
   error: null,
   success: false,
-  message: ''
+  message: '',
+  username: null,
+  email: null
 }
 
 export const signup = createAsyncThunk(
   'auth/signup',
-  async (userData: SignupData, { rejectWithValue, dispatch }) => {
+  async (userData: SignupData, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.post(
         API_PATHS.signup,
-        userData,
+        userData
         // { withoutAuth: true }
       )
       const message = response.data.message
@@ -43,7 +47,9 @@ export const signup = createAsyncThunk(
       // const { accessToken, userInfo } = response.data.data
       // const { message } = response.data.message
       // dispatch(setUser(userInfo))
-      return { message }
+      const { username, email } = response.data.data; // Adjust according to your API response
+      return { message, username, email };
+      // return { message }
     } catch (err) {
       const error = err as { response?: { data?: { message?: string } } }
       const errorMessage = error.response?.data?.message || 'Signup failed'
@@ -110,6 +116,8 @@ const authSlice = createSlice({
       state.loading = false
       state.success = true
       state.message = action.payload.message
+      state.username = action.payload.username
+      state.email = action.payload.email
     })
     builder.addCase(signup.rejected, (state, action) => {
       state.loading = false

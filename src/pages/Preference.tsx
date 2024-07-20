@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
-import { useAppDispatch } from '@/store'
+// import { useAppDispatch } from '@/store'
 import { Card, CardTitle, CardDescription } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 
@@ -16,7 +16,7 @@ const options = {
 
 function Preferences() {
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
+  // const dispatch = useAppDispatch();
   const [preferences, setPreferences] = useState({
     diet: [] as string[],
     allergies: [] as string[],

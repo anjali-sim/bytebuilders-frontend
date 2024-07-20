@@ -2,7 +2,7 @@ import { recipes } from '@/data'
 import { Recipe } from '@/types'
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
-interface RecipeState {
+export interface RecipeState {
   recipes: Recipe[]
 }
 

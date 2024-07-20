@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-interface PreferencesState {
+export interface PreferencesState {
   diet: string[];
   allergies: string[];
   flavors: string[];
