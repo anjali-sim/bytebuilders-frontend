@@ -9,6 +9,7 @@ import ProtectedRoute from './routes/ProtectedRoute'
 import Layout from './pages/Layout'
 import Home from './pages/Home'
 import NotFound from './pages/NotFound'
+import RecipePage from './components/RecipePage'
 
 function App() {
   const routes: RouteObject[] = [
@@ -29,8 +30,12 @@ function App() {
       ),
       children: [
         {
-          path: '/home',
+          path: '/',
           element: <Home />
+        },
+        {
+          path: '/recipe/:id',
+          element: <RecipePage />
         },
         {
           path: '*',
