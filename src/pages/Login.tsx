@@ -1,136 +1,114 @@
-import React from 'react'
-import { Button } from '../components/ui/button'
 
-const Login = () => {
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
+import { z } from 'zod'
+
+import { Button } from '@/components/ui/button'
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage
+} from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
+import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { toast } from "sonner"
+import { Link, useNavigate } from 'react-router-dom'
+import { useAppDispatch } from '@/store'
+import { login } from '@/store/authSlice'
+import { loginSchema } from '@/constants/schema'
+
+function Login() {
+  const navigate = useNavigate()
+  const dispatch = useAppDispatch()
+  const form = useForm<z.infer<typeof loginSchema>>({
+    resolver: zodResolver(loginSchema),
+    defaultValues: {
+      email: '',
+      password: '',
+    }
+  })
+
+  async function onSubmit(values: z.infer<typeof loginSchema>) {
+    console.log(values)
+    try {
+    const response = await dispatch(login(values))
+    toast.success(response.message, {
+      style: { backgroundColor: 'green', color: 'white' }
+    }); 
+    navigate('/')
+    } catch (error) {
+      console.error("Login failed", error);
+      toast.error(error.message || "Login failed", {
+        style: { backgroundColor: 'red', color: 'white' }
+      });
+    }
+  }
+
   return (
-    <div>
-      Login Page
-      <Button variant="outline">Button</Button>
+    <div className="h-screen w-screen flex justify-center items-center bg-gray-100">
+      <Card className="p-8 sm:p-12 w-full max-w-md">
+        <CardHeader className='text-center'>
+          <CardTitle className="text-2xl font-bold text-primary mb-2">Login</CardTitle>
+          <CardDescription className="text-gray-500 mb-6">
+            Please enter your email and password to login.
+          </CardDescription>
+        </CardHeader>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="Enter your email"
+                      {...field}
+                      className="mt-1 border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary"
+                    />
+                  </FormControl>
+                  <FormMessage className="text-red-500" />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Password</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="Enter your password"
+                      {...field}
+                      type="password"
+                      className="mt-1 border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary"
+                    />
+                  </FormControl>
+                  <FormMessage className="text-red-500" />
+                </FormItem>
+              )}
+            />
+
+            <Button type="submit" variant="outline" className="w-full py-2 mt-4 bg-primary text-white hover:bg-primary-dark">
+              Login
+            </Button>
+            <p className="mt-4 text-center text-gray-700">
+              Don’t have an account?{' '}
+              <Link to="/signup" className="text-primary font-semibold">
+                Register
+              </Link>
+            </p>
+          </form>
+        </Form>
+      </Card>
     </div>
   )
 }
 
 export default Login
-
-// import { useEffect } from 'react'
-// import { Col, Flex, Form, Row, Typography } from 'antd'
-// import { useNavigate } from 'react-router-dom'
-// import { AuthPageStyle } from './index.style'
-// import Images from '../config/images'
-// import { NavDotIcon } from '../components/icons'
-// import { Input } from '../components/ant/input'
-// import { Button } from '../components/ant/button'
-// import { useAppDispatch, useAppSelector } from '../store'
-// import { login, resetState } from '../store/authSlice'
-// import { notifyError, notifySuccess } from '../utils/notification'
-
-// const { Text, Title } = Typography
-
-// interface LoginFormValues {
-//   identifier: string
-//   password: string
-// }
-
-// function Login() {
-//   const [form] = Form.useForm()
-//   const navigate = useNavigate()
-//   const dispatch = useAppDispatch()
-//   const { loading, error, success, message } = useAppSelector(
-//     (state) => state.auth
-//   )
-//   const handleSubmit = (values: LoginFormValues) => {
-//     dispatch(login(values))
-//   }
-
-//   useEffect(() => {
-//     if (error) {
-//       notifyError(error)
-//     } else if (success) {
-//       notifySuccess(message)
-//       navigate('/chat')
-//     }
-//     return () => {
-//       dispatch(resetState())
-//     }
-//   }, [dispatch, navigate, error, success, message])
-
-//   return (
-//     <AuthPageStyle>
-//       <Row>
-//         <Col flex="0 0 41.8%">
-//           <div className="leftPanel">
-//             <img src={Images.authImg} alt="banner" className="bannerImg" />
-//             <Flex className="bannerText" vertical>
-//               <Title level={3}>From Small Changes to Big Results</Title>
-//               <Text>
-//                 At CompassCoach, we focus on transforming habits, not
-//                 individuals, through personalized coaching and patented goal
-//                 mastery technology, empowering you to achieve lasting wellness
-//                 and long-term success.
-//               </Text>
-//               <NavDotIcon />
-//             </Flex>
-//           </div>
-//         </Col>
-//         <Col flex="0 0 58.2%">
-//           <Flex className="loginFormContainer" justify="center" align="center">
-//             <Flex className="loginForm" vertical gap={30}>
-//               <img src={Images.logoIcon} alt="logo" />
-//               <Flex vertical>
-//                 <Title level={1}>Welcome Back</Title>
-//               </Flex>
-//               <Form layout="vertical" form={form} onFinish={handleSubmit}>
-//                 <Form.Item
-//                   label="Email Address or Username"
-//                   name="identifier"
-//                   required
-//                   rules={[
-//                     {
-//                       required: true,
-//                       message: ''
-//                     }
-//                   ]}
-//                 >
-//                   <Input placeholder="Enter Email Address or Username" />
-//                 </Form.Item>
-//                 <Form.Item
-//                   label="Password"
-//                   name="password"
-//                   required
-//                   rules={[{ required: true, message: '' }]}
-//                 >
-//                   <Input.Password placeholder="Enter Password" />
-//                 </Form.Item>
-//                 <Form.Item>
-//                   <Button
-//                     block
-//                     type="primary"
-//                     htmlType="submit"
-//                     loading={loading}
-//                   >
-//                     {loading ? 'Logging In...' : 'Log In'}
-//                   </Button>
-//                 </Form.Item>
-//                 {/* <Flex justify="center">
-//                   <Text className="linkText">
-//                     Don’t have an account ?{' '}
-//                     <Link to="/signup">Register now</Link>
-//                   </Text>
-//                 </Flex> */}
-//               </Form>
-//             </Flex>
-//             <Flex justify="center" className="copyrightText">
-//               <Text className="linkText">
-//                 © 2024 CompassCoachGPT, all right reserved{' '}
-//                 {/* <Link to="/signup">Terms & conditions</Link>
-//                 <Link to="/signup">Privacy policy</Link> */}
-//               </Text>
-//             </Flex>
-//           </Flex>
-//         </Col>
-//       </Row>
-//     </AuthPageStyle>
-//   )
-// }
-
-// export default Login

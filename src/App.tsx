@@ -1,4 +1,3 @@
-import './App.css'
 import {
   createBrowserRouter,
   RouteObject,
@@ -6,10 +5,13 @@ import {
 } from 'react-router-dom'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
-import ProtectedRoute from './routes/ProtectedRoute'
+// import ProtectedRoute from './routes/ProtectedRoute'
 import Layout from './pages/Layout'
 import Home from './pages/Home'
 import NotFound from './pages/NotFound'
+import Preferences from './pages/Preference'
+import Profile from './pages/Profile'
+import RecipePage from './components/RecipePage'
 
 function App() {
   const routes: RouteObject[] = [
@@ -30,8 +32,24 @@ function App() {
       ),
       children: [
         {
-          path: '/home',
+          path: '/',
           element: <Home />
+        },
+        {
+          path: '/recipe/:id',
+          element: <RecipePage />
+        },
+        {
+          path: '/preferences',
+          element: <Preferences />
+        },
+        {
+          path: '/profile',
+          element: <Profile />
+        },
+        {
+          path: '/preferences',
+          element: <Preferences />
         },
         {
           path: '*',
@@ -46,7 +64,7 @@ function App() {
   return (
     <>
       <RouterProvider router={router} />
-      <Login />
+      {/* <Preferences /> */}
     </>
   )
 }

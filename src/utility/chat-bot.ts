@@ -23,6 +23,8 @@ const config: IConfig = {
   }
 }
 
+const isValidMessage = (message: string) => message !== ''
+
 const InitialMessages = [
   createChatBotMessage(`Welcome to Recipe Remix! 🍲✨`, {}),
   createChatBotMessage(
@@ -59,5 +61,5 @@ const loadMessages = () => {
   return messages
 }
 
-export { config, loadMessages, saveMessages, InitialMessages }
+export { config, loadMessages, saveMessages, InitialMessages, isValidMessage }
 export type { CreateMessageType }

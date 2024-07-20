@@ -5,7 +5,7 @@ import React from 'react'
 import { createCustomMessage } from 'react-chatbot-kit'
 
 const MessageParser = ({ children, actions }: any) => {
-  const parse = async (message: any, ...extra: any[]) => {
+  const parse = async (message: any) => {
     const customUserMessage = createCustomMessage(message, 'user', {})
     saveMessages(customUserMessage)
     return actions.createBotMsg(customUserMessage)

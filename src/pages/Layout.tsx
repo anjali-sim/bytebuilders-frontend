@@ -1,3 +1,4 @@
+import Navbar from '@/components/Navbar'
 import ChatBot from '@/components/chat-bot'
 import React from 'react'
 import { Outlet } from 'react-router-dom'
@@ -5,9 +6,9 @@ import { Outlet } from 'react-router-dom'
 const Layout: React.FC = () => {
   return (
     <div>
-      <h1>Protected Area</h1>
-      <ChatBot />
+      <Navbar />
       <Outlet />
+      <ChatBot />
     </div>
   )
 }
