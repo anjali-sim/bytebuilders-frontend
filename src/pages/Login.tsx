@@ -35,11 +35,15 @@ function Login() {
     console.log(values)
     try {
     const response = await dispatch(login(values))
-    toast.success(response.message); 
+    toast.success(response.message, {
+      style: { backgroundColor: 'green', color: 'white' }
+    }); 
     navigate('/')
     } catch (error) {
       console.error("Login failed", error);
-      toast.error(error.message || "Login failed");
+      toast.error(error.message || "Login failed", {
+        style: { backgroundColor: 'red', color: 'white' }
+      });
     }
   }
 

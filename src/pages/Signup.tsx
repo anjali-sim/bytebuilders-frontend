@@ -12,29 +12,34 @@ import {
   FormMessage
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import {
+  Card,
+  CardDescription,
+  CardHeader,
+  CardTitle
+} from '@/components/ui/card'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAppDispatch } from '@/store'
 import { signup } from '@/store/authSlice'
 import { formSchema } from '@/constants/schema'
-import { toast } from "sonner"
+import { toast } from 'sonner'
 
 function Signup() {
   const dispatch = useAppDispatch()
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       username: '',
       email: '',
       password: '',
-      confirmPassword: '',
+      confirmPassword: ''
     }
   })
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values)
-    const { confirmPassword, ...signupData } = values;
+    const { confirmPassword, ...signupData } = values
     // try {
     //   const response = await dispatch(signup(values));
     //   console.log(response);
@@ -45,20 +50,30 @@ function Signup() {
     // }
 
     try {
-      const response = await dispatch(signup(signupData)).unwrap();
-      console.log(response);
-      toast.success(response.message);
+      const response = await dispatch(signup(signupData)).unwrap()
+      console.log(response)
+      toast.success(response.message, {
+        style: { backgroundColor: 'green', color: 'white' }
+      })
+
+      if (error.response.status === '400') {
+        toast.error(response.message, {
+          style: { backgroundColor: 'red', color: 'white' }
+        })
+      }
       navigate('/')
     } catch (error) {
-      console.error("Signup failed", error);
-      toast.error(error.message || "Signup failed");
+      console.error('Signup failed', error)
+      // toast.error(error?.message || "Signup failed");
     }
   }
   return (
     <div className="h-screen w-screen flex justify-center items-center bg-gray-100">
       <Card className="p-8 sm:p-12 w-full max-w-md">
-      <CardHeader className='text-center'>
-          <CardTitle className="text-2xl font-bold text-primary mb-2">Sign Up</CardTitle>
+        <CardHeader className="text-center">
+          <CardTitle className="text-2xl font-bold text-primary mb-2">
+            Sign Up
+          </CardTitle>
           <CardDescription className="text-gray-500 mb-6">
             Please enter your email and password to login.
           </CardDescription>
@@ -72,8 +87,11 @@ function Signup() {
                 <FormItem>
                   <FormLabel>Username</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter your username" {...field}
-                    className="mt-1 border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary" />
+                    <Input
+                      placeholder="Enter your username"
+                      {...field}
+                      className="mt-1 border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary"
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -87,8 +105,11 @@ function Signup() {
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter your email" {...field}
-                    className="mt-1 border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary" />
+                    <Input
+                      placeholder="Enter your email"
+                      {...field}
+                      className="mt-1 border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary"
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -133,7 +154,13 @@ function Signup() {
               )}
             />
 
-            <Button type="submit" variant="outline" className="w-full py-2 mt-4 bg-primary text-white hover:bg-primary-dark">Sign Up</Button>
+            <Button
+              type="submit"
+              variant="outline"
+              className="w-full py-2 mt-4 bg-primary text-white hover:bg-primary-dark"
+            >
+              Sign Up
+            </Button>
             <p className="mt-4 text-center text-gray-700">
               Already have an account?{' '}
               <Link to="/login" className="text-primary font-semibold">
