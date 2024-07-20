@@ -41,7 +41,7 @@ export const fetchRecipesData = createAsyncThunk<
       throw new Error('No meals found')
     }
 
-    return recipes
+    return data.results
   } catch (error) {
     console.error('Error fetching recipes:', error)
     return rejectWithValue('Failed to fetch recipes')

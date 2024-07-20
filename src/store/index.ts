@@ -3,13 +3,13 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 import authSlice, { AuthState } from './authSlice'
 import userSlice, { UserState } from './userSlice'
 import recipeSlice, { RecipeState } from './recipeSlice'
+import loadingSlice from './loadingSlice'
 
 export const store = configureStore({
   reducer: {
     user: userSlice,
     auth: authSlice,
-    loading: loadingSlice
-    preferences: preferenceSlice,
+    loading: loadingSlice,
     recipe: recipeSlice
   }
 })

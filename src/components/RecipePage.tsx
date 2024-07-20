@@ -19,9 +19,12 @@ const RecipePage = () => {
   const { id } = useParams()
 
   useEffect(() => {
-    const data: Recipe = fetchSingleRecipeData(id)
-    console.log(data)
-    setRecipeInfo(data)
+    const fetchData = async () => {
+      const data: Recipe = await fetchSingleRecipeData(id)
+      console.log(data)
+      setRecipeInfo(data)
+    }
+    fetchData()
   }, [])
 
   return (
@@ -29,23 +32,23 @@ const RecipePage = () => {
       <Breadcrumb className="mb-4">
         <BreadcrumbList>
           <BreadcrumbItem>
-            <BreadcrumbLink href="/">Recipe</BreadcrumbLink>
+            <BreadcrumbLink href="/">Recipes</BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator />
 
           <BreadcrumbItem>
-            <BreadcrumbPage>{id}</BreadcrumbPage>
+            <BreadcrumbPage>
+              <span className="text-primary">{id}</span>
+            </BreadcrumbPage>
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
       {!loading ? (
         <div>
           <img
-            src={
-              'https://images.unsplash.com/photo-1475856033578-76b4a228f5c5?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
-            }
+            src={recipe?.image}
             alt={recipe?.title}
-            className="w-full h-[400px] object-cover rounded-md mb-4"
+            className="w-full h-[600px] object-cover rounded-md mb-4"
           />
           <div className="flex justify-between mb-4">
             <h1 className="text-4xl font-bold">{recipe?.title}</h1>
