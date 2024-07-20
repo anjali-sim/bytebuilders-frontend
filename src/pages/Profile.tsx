@@ -1,4 +1,4 @@
-import { CardTitle, Card } from '@/components/ui/card'
+import { CardTitle, Card, CardDescription } from '@/components/ui/card'
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -10,7 +10,18 @@ import { Button } from '@/components/ui/button'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { FaClock, FaFire } from 'react-icons/fa6'
 import { toast } from 'sonner'
-import { useAppSelector } from '@/store'
+import { useAppDispatch, useAppSelector } from '@/store'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger
+} from '@/components/ui/dialog'
+import { useState } from 'react'
+import { editPreferences } from '@/store/userSlice'
 
 const recipes = [
   {
@@ -85,18 +96,58 @@ const dummyPreferences = [
   { title: 'Meal Types', description: 'Types of meals you enjoy.' }
 ]
 
+const options = {
+  diet: ['Ketogenic', 'Vegan', 'Vegetarian', 'Lacto-Vegetarian', 'Gluten Free'],
+  allergies: ['Peanuts', 'Dairy', 'Gluten', 'Shellfish', 'Soy'],
+  cuisines: ['Italian', 'Mexican', 'Chinese', 'Indian', 'American', 'Thai']
+}
+
 const Profile = () => {
   const { username, email } = useAppSelector((state) => state.auth)
-  const handleEdit = () => {
-    toast.success('Updated Successfully', {
-      style: { backgroundColor: 'green', color: 'white' }
+  const dispatch = useAppDispatch()
+
+  const [preferences, setPreferences] = useState({
+    diet: [] as string[],
+    allergies: [] as string[],
+    cuisines: [] as string[]
+  })
+
+  const handleOptionClick = (
+    category: keyof typeof preferences,
+    option: string
+  ) => {
+    setPreferences((prevPreferences) => {
+      const currentOptions = prevPreferences[category]
+      if (currentOptions.includes(option)) {
+        return {
+          ...prevPreferences,
+          [category]: currentOptions.filter((item) => item !== option)
+        }
+      } else {
+        return {
+          ...prevPreferences,
+          [category]: [...currentOptions, option]
+        }
+      }
     })
+  }
+
+  const handleEdit = async () => {
+    try {
+      await dispatch(editPreferences(preferences)).unwrap()
+      toast.success('Preferences updated successfully!', {
+        style: { backgroundColor: 'green', color: 'white' }
+      })
+    } catch (error) {
+      toast.error('Failed to update preferences. Please try again.', {
+        style: { backgroundColor: 'red', color: 'white' }
+      })
+    }
   }
 
   return (
     <div className="max-w-7xl mx-auto">
-      {/* <div className="w-full max-w-3xl space-y-8"> */}
-      <div className="p-8 w-full space-y-8">
+      <div className="p-4 mt-4 w-full space-y-8">
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem>
@@ -124,7 +175,95 @@ const Profile = () => {
             <Card className="p-3">
               <ul className="space-y-4">
                 <div className="flex justify-end">
-                  <Button onClick={handleEdit}>Edit</Button>
+                  <Dialog>
+                    <DialogTrigger asChild>
+                      <Button>Edit</Button>
+                    </DialogTrigger>
+                    <DialogContent className="sm:max-w-[425px]">
+                      <DialogHeader>
+                        <DialogTitle>Edit Your Preferences</DialogTitle>
+                        <DialogDescription>
+                          Make changes to your preferences here. Click save when
+                          you're done.
+                        </DialogDescription>
+                      </DialogHeader>
+
+                      <div>
+                        <CardDescription className="text-md font-semibold mb-2">
+                          Are you following any specific diet?
+                        </CardDescription>
+                        <div className="space-x-2 flex flex-wrap">
+                          {options.diet.map((option) => (
+                            <Button
+                              key={option}
+                              variant={
+                                preferences.diet.includes(option)
+                                  ? 'solid'
+                                  : 'outline'
+                              }
+                              className={`m-1 ${preferences.diet.includes(option) ? 'bg-primary text-white' : ''}`}
+                              onClick={() => handleOptionClick('diet', option)}
+                            >
+                              {option}
+                            </Button>
+                          ))}
+                        </div>
+                      </div>
+
+                      <div>
+                        <CardDescription className="text-md font-semibold mb-2">
+                          Do you have any food allergies?
+                        </CardDescription>
+                        <div className="space-x-2 flex flex-wrap">
+                          {options.allergies.map((option) => (
+                            <Button
+                              key={option}
+                              variant={
+                                preferences.allergies.includes(option)
+                                  ? 'solid'
+                                  : 'outline'
+                              }
+                              className={`m-1 ${preferences.allergies.includes(option) ? 'bg-primary text-white' : ''}`}
+                              onClick={() =>
+                                handleOptionClick('allergies', option)
+                              }
+                            >
+                              {option}
+                            </Button>
+                          ))}
+                        </div>
+                      </div>
+
+                      <div>
+                        <CardDescription className="text-md font-semibold mb-2">
+                          What cuisines do you enjoy the most?
+                        </CardDescription>
+                        <div className="space-x-2 flex flex-wrap">
+                          {options.cuisines.map((option) => (
+                            <Button
+                              key={option}
+                              variant={
+                                preferences.cuisines.includes(option)
+                                  ? 'solid'
+                                  : 'outline'
+                              }
+                              className={`m-1 ${preferences.cuisines.includes(option) ? 'bg-primary text-white' : ''}`}
+                              onClick={() =>
+                                handleOptionClick('cuisines', option)
+                              }
+                            >
+                              {option}
+                            </Button>
+                          ))}
+                        </div>
+                      </div>
+                      <DialogFooter>
+                        <Button type="submit" onClick={handleEdit}>
+                          Save changes
+                        </Button>
+                      </DialogFooter>
+                    </DialogContent>
+                  </Dialog>
                 </div>
                 {dummyPreferences.map((preference, index) => (
                   <li key={index}>
@@ -173,7 +312,6 @@ const Profile = () => {
           </TabsContent>
         </Tabs>
       </div>
-      {/* </div> */}
     </div>
   )
 }

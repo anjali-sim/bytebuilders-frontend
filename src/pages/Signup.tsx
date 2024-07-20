@@ -75,8 +75,9 @@ function Signup() {
             Sign Up
           </CardTitle>
           <CardDescription className="text-gray-500 mb-6">
-            Please enter your email and password to login.
+            Create Your Signup
           </CardDescription>
+          <CardDescription className="text-gray-500 mb-6"></CardDescription>
         </CardHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -166,6 +167,10 @@ function Signup() {
               <Link to="/login" className="text-primary font-semibold">
                 Login
               </Link>
+            </p>
+            <p className="text-gray-400 text-center">
+              By continuing you indicate that you read and agreed to the Terms
+              of Use
             </p>
           </form>
         </Form>
