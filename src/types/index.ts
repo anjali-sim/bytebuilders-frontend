@@ -15,4 +15,15 @@ export interface Recipe {
   veryHealthy: boolean
   veryPopular: boolean
   sustainable: boolean
+  meta: {
+    aggregateLikes: number
+    instructions: string
+    analyzedInstructions: string
+    healthScore: number
+    preparationMinutes: number
+    cookingMinutes: number
+    diets: string[]
+    occasions: string[]
+    extendedIngredients: string
+  }
 }
