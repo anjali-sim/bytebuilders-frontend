@@ -1,13 +1,37 @@
 // in ActionProvider.jsx
+import { CreateMessageType, saveMessages } from '@/utility/chat-bot'
+import axios from 'axios'
 import React from 'react'
 
-const ActionProvider = ({ createChatBotMessage, setState, children }: any) => {
-  const createBotMsg = (message: string) => {
-    const botMessage = createChatBotMessage(message)
+const createMessageHistory = (state: any[]) => {
+  return state.map((messageObj) => ({
+    role: messageObj.type === 'bot' ? 'system' : 'user',
+    content: messageObj.message
+  }))
+}
 
+const ActionProvider = ({
+  createChatBotMessage,
+  setState,
+  children,
+  state
+}: any) => {
+  const createBotMsg = async (customMessage: CreateMessageType) => {
+    const messageHistory = createMessageHistory([
+      ...state.messages,
+      customMessage
+    ])
+
+    const response = await axios.post(
+      `${import.meta.env.VITE_BASE_URL}/api/chat`,
+      {
+        messageHistory: messageHistory
+      }
+    )
+
+    const botMessage = createChatBotMessage(response.data)
+    saveMessages(botMessage)
     setState((prev: any) => {
-      console.log(prev)
-
       return {
         ...prev,
         messages: [...prev.messages, botMessage]

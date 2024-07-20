@@ -1,15 +1,25 @@
+import CustomBotAvatar from '@/components/chat-bot/bot-customs/CustomBotAvatar'
+import { RenderedBotContent } from '@/components/chat-bot/bot-customs/CustomResponseModal'
+import CustomUserAvatar from '@/components/chat-bot/bot-customs/CustomUserAvatar'
 import { createChatBotMessage } from 'react-chatbot-kit'
 import IConfig from 'react-chatbot-kit/build/src/interfaces/IConfig'
 
 const config: IConfig = {
   initialMessages: [],
   customStyles: {
-    botMessageBox: { backgroundColor: 'orange' },
-    chatButton: { backgroundColor: 'orange' }
+    botMessageBox: { backgroundColor: '#F97316' },
+    chatButton: { backgroundColor: '#F97316' }
   },
-  botName: 'Topa',
+  botName: 'Recipe Remix',
   state: {
     currentRecipe: [{ id: 0, recipe: '' }]
+  },
+  customComponents: {
+    botChatMessage(props) {
+      return RenderedBotContent({ content: props.message })
+    },
+    userAvatar: CustomUserAvatar,
+    botAvatar: CustomBotAvatar
   }
 }
 
@@ -21,12 +31,24 @@ const InitialMessages = [
   )
 ]
 
-const saveMessages = (message: any): any => {
-  let messagesHistory: any = localStorage.getItem('chat_messages')
-  const newHistory = [...(messagesHistory ? messagesHistory : []), message]
-  console.log(newHistory)
+type CreateMessageType = {
+  loading?: boolean
+  widget?: string
+  delay?: number
+  payload?: any
+  message: string
+  type: string
+  id: number
+}
 
-  // localStorage.setItem('chat_messages', JSON.stringify())
+const saveMessages = (message: CreateMessageType): any => {
+  let messagesHistory: any = localStorage.getItem('chat_messages')
+  const newHistory = [
+    ...(messagesHistory ? JSON.parse(messagesHistory) : InitialMessages),
+    message
+  ]
+
+  localStorage.setItem('chat_messages', JSON.stringify(newHistory))
 }
 
 const loadMessages = () => {
@@ -38,3 +60,4 @@ const loadMessages = () => {
 }
 
 export { config, loadMessages, saveMessages, InitialMessages }
+export type { CreateMessageType }
