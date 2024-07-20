@@ -20,9 +20,9 @@ function App() {
     {
       path: '/',
       element: (
-        <ProtectedRoute>
+        // <ProtectedRoute>
           <Layout />
-        </ProtectedRoute>
+        // </ProtectedRoute>
       ),
       children: [
         {
@@ -42,7 +42,7 @@ function App() {
   return (
     <>
     <RouterProvider router={router} />
-    <Login />
+    {/* <Login /> */}
     </>
   )
 }
