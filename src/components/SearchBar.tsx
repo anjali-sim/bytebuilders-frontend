@@ -1,4 +1,3 @@
-import { recipes } from '@/data'
 import { FaMagnifyingGlass } from 'react-icons/fa6'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { useEffect, useState } from 'react'
@@ -34,7 +33,7 @@ const SearchBar = () => {
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 py-4">
       <div className="relative">
         <span className="absolute inset-y-0 left-0 flex items-center pl-3">
           <FaMagnifyingGlass className="text-gray-400" />
@@ -47,7 +46,7 @@ const SearchBar = () => {
           onChange={(e) => onchangeHandler(e.target.value)}
         />
         {open && (
-          <div className="max-w-7xl absolute bg-white rounded-b-lg shadow-lg w-full p-2">
+          <div className="max-w-7xl absolute bg-white rounded-b-lg shadow-lg w-full p-2 z-50">
             <ScrollArea className="max-h-[400px] w-full rounded-md">
               {filteredRecipes.map((r) => {
                 return (

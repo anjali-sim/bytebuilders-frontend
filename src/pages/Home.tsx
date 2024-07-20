@@ -1,3 +1,4 @@
+import Filterbar from '@/components/Filterbar'
 import RecipeList from '@/components/RecipeList'
 import SearchBar from '@/components/SearchBar'
 import { useAppDispatch, useAppSelector } from '@/store'
@@ -15,7 +16,10 @@ const Home = () => {
   return (
     <div>
       <SearchBar />
-      <RecipeList />
+      <div className="max-w-7xl mx-auto flex">
+        <Filterbar />
+        <RecipeList />
+      </div>
     </div>
   )
 }
