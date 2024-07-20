@@ -47,7 +47,7 @@ const SearchBar = () => {
         />
         {open && (
           <div className="max-w-7xl absolute bg-white rounded-b-lg shadow-lg w-full p-2 z-50">
-            <ScrollArea className="max-h-[400px] w-full rounded-md">
+            <ScrollArea className="max-h-[400px] overflow-auto w-full rounded-md">
               {filteredRecipes.map((r) => {
                 return (
                   <div

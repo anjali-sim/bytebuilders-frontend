@@ -13,7 +13,7 @@ const Navbar = () => {
   const { pathname } = useLocation()
 
   return (
-    <nav className=" shadow-lg ">
+    <nav className=" shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           {/* Left side logo */}

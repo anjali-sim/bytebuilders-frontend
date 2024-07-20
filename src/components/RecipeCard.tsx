@@ -10,15 +10,16 @@ interface RecipeCardProps {
 
 const RecipeCard = ({ recipe }: RecipeCardProps) => {
   const navigate = useNavigate()
+  console.log(recipe)
   return (
-    <Card className="w-[300px]">
+    <Card className="w-[300px] ">
       <img
         className="w-full h-48 object-cover rounded-t-md"
         src={recipe.image}
         alt={'asd'}
       />
       <div className="px-6 py-4">
-        <div className="font-bold text-xl mb-2 cursor-pointer">
+        <div className="font-bold text-xl mb-2 cursor-pointer overflow: hidden text-ellipsis tex">
           {recipe.title}
         </div>
         <div className="flex gap-4 items-center text-sm mb-4">
@@ -31,6 +32,8 @@ const RecipeCard = ({ recipe }: RecipeCardProps) => {
             <span>{recipe.calories} Calories</span>
           </div>
         </div>
+      </div>
+      <div className="px-6 pb-4">
         <Button
           className="rounded-full w-full"
           variant="outline"

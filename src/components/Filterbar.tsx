@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { FaFilter } from 'react-icons/fa6'
+import { useLocation } from 'react-router-dom'
 
 type FilterOptions = {
   diet: string[]
@@ -14,6 +15,9 @@ type FiltersState = {
 }
 
 export const Filterbar: React.FC = () => {
+  const location = useLocation()
+  const queryparams = new URLSearchParams(location.search)
+
   const options: FilterOptions = {
     diet: [
       'Ketogenic',
