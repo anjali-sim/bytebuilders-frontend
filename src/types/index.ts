@@ -27,3 +27,13 @@ export interface Recipe {
     extendedIngredients: string
   }
 }
+
+export enum days {
+  'Monday',
+  'TuesDay',
+  'Wednesday',
+  'Thursday',
+  'Frieday ',
+  'Saturady',
+  'Sunday'
+}

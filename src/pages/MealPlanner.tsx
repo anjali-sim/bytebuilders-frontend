@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
   Dialog,
   DialogContent,
@@ -8,45 +8,90 @@ import {
   DialogTrigger
 } from '@/components/ui/dialog'
 import AddMealModal from '@/components/AddMealForm'
-import { DatePickerWithRange } from '@/components/DateRange'
-const daysOfWeek = [
-  'Monday',
-  'Tuesday',
-  'Wednesday',
-  'Thursday',
-  'Friday',
-  'Saturday',
-  'Sunday'
-]
-const mealSlots = ['Breakfast', 'Lunch', 'Snacks', 'Dinner']
+import { Button } from '@/components/ui/button'
+import clsx from 'clsx'
+import { useDispatch } from 'react-redux'
+import { useAppDispatch, useAppSelector } from '@/store'
+import { fetchMealPlanData } from '@/store/recipeSlice'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { days } from '@/types'
 
 const MealPlanner = () => {
-  // const
-  const [calendar, setCalendar] = useState(Array(7).fill(Array(4).fill(null)))
-  const handleAddMeal = (dayIndex: number, slotIndex: number) => {
-    const newCalendar = calendar.map((day, dIdx) =>
-      day.map((meal: any, mIdx: any) =>
-        dIdx === dayIndex && mIdx === slotIndex ? 'Meal Added' : meal
-      )
-    )
-    setCalendar(newCalendar)
+  const mealData = useAppSelector((state) => state.recipe.mealplan)
+  const dispatch = useAppDispatch()
+  const [currentWeek, setCurrentWeek] = useState(getCurrentWeek())
+
+  function getCurrentWeek() {
+    const now = new Date()
+    const monday = new Date(now.setDate(now.getDate() - now.getDay() + 1))
+    const sunday = new Date(monday)
+    sunday.setDate(sunday.getDate() + 6)
+    return { monday, sunday }
   }
+
+  const getNextWeek = () => {
+    setCurrentWeek((prev) => {
+      const nextMonday = new Date(prev.monday)
+      nextMonday.setDate(nextMonday.getDate() + 7)
+      const nextSunday = new Date(nextMonday)
+      nextSunday.setDate(nextSunday.getDate() + 6)
+      return { monday: nextMonday, sunday: nextSunday }
+    })
+  }
+
+  const getPrevWeek = () => {
+    setCurrentWeek((prev) => {
+      const prevMonday = new Date(prev.monday)
+      prevMonday.setDate(prevMonday.getDate() - 7)
+      const prevSunday = new Date(prevMonday)
+      prevSunday.setDate(prevSunday.getDate() + 6)
+      return { monday: prevMonday, sunday: prevSunday }
+    })
+  }
+  console.log(mealData)
+
+  useEffect(() => {
+    dispatch(fetchMealPlanData())
+  }, [])
+
+  const [calendar, setCalendar] = useState(Array(7).fill(Array(4).fill(null)))
+
+  // const handleAddMeal = (dayIndex, slotIndex) => {
+  //   const newCalendar = calendar.map((day, dIdx) =>
+  //     day.map((meal, mIdx) =>
+  //       dIdx === dayIndex && mIdx === slotIndex ? 'Meal Added' : meal
+  //     )
+  //   )
+  //   setCalendar(newCalendar)
+  // }
+
+  const formatDate = (date: Date) => date.toISOString().split('T')[0]
 
   return (
     <div className="max-w-7xl mx-auto rounded-lg overflow-hidden my-10">
       <div className="flex items-center justify-between px-4 py-2 border-b border-gray-200">
         <h2 className="text-lg font-bold text-gray-800">Weekly Meal Planner</h2>
         <div className="flex gap-2">
-          <DatePickerWithRange />
+          <Button variant="outline">
+            {`${formatDate(currentWeek.monday)} - ${formatDate(
+              currentWeek.sunday
+            )}`}
+          </Button>
+          <Button variant="outline" onClick={getPrevWeek}>
+            Prev
+          </Button>
+          <Button variant="outline" onClick={getNextWeek}>
+            Next
+          </Button>
           <Dialog>
             <DialogTrigger className="px-4 py-2 rounded-sm bg-primary text-sm text-white font-semibold">
               Add Meal
             </DialogTrigger>
             <DialogContent className="m-4">
               <DialogHeader>
-                <DialogTitle>Add Meal ?</DialogTitle>
+                <DialogTitle>Add Meal</DialogTitle>
                 <DialogDescription>
-                  It will add you favorite meal to your slote of the day
+                  Add your favorite meal to your slot of the day
                 </DialogDescription>
               </DialogHeader>
               <AddMealModal />
@@ -55,35 +100,89 @@ const MealPlanner = () => {
         </div>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-4 gap-2 p-4">
-        {daysOfWeek.map((day, dayIndex) => (
-          <div key={day} className="border rounded-lg shadow-sm bg-gray-50">
-            <div className="bg-gray-200 text-black text-center py-2">
-              <h3 className="text-md font-semibold">{day}</h3>
-            </div>
-            <div className="p-2 space-y-2">
-              {mealSlots.map((slot, slotIndex) => (
-                <div
-                  key={slot}
-                  className="bg-white border border-dashed border-gray-400 rounded-lg shadow-sm p-2 flex justify-between items-center"
-                >
-                  {calendar[dayIndex][slotIndex] ? (
-                    <span className="text-gray-700">
-                      {calendar[dayIndex][slotIndex]}
-                    </span>
-                  ) : (
-                    <button
-                      onClick={() => handleAddMeal(dayIndex, slotIndex)}
-                      className="flex items-center text-gray-400 hover:text-opacity-80 focus:outline-none"
-                    >
-                      {/* <FontAwesomeIcon icon={faPlus} className="mr-2" /> */}
-                      <span className="">{slot} </span>
-                    </button>
-                  )}
+        {mealData.map((day, dayIndex) => {
+          const date = new Date(currentWeek.monday)
+          date.setDate(date.getDate() + dayIndex)
+          return (
+            <div
+              key={dayIndex}
+              className="border rounded-lg shadow-sm bg-gray-50 min-h-[400px]"
+            >
+              <div className={clsx('bg-gray-200 text-black text-center py-2')}>
+                <h3 className="text-md font-semibold">
+                  {days[dayIndex]} - {formatDate(date)}
+                </h3>
+              </div>
+              <div className="p-2 space-y-2">
+                <div className="bg-white border border-dashed border-gray-400 rounded-lg shadow-sm p-2 flex justify-between flex-col">
+                  <p className="text-sm text-primary">Breakfast</p>
+                  {day.breakfast.map((recipe, index) => (
+                    <div className="bg-gray-200 rounded-sm p-2 flex items-center gap-2">
+                      <Avatar>
+                        <AvatarImage
+                          src={
+                            'https://images.unsplash.com/photo-1475856033578-76b4a228f5c5?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+                          }
+                          sizes="sm"
+                        />
+                        <AvatarFallback>CN</AvatarFallback>
+                      </Avatar>
+                      <p className="text-sm">{recipe.name}</p>
+                    </div>
+                  ))}
                 </div>
-              ))}
+                <div className="bg-white border border-dashed border-gray-400 rounded-lg shadow-sm p-2 flex justify-between flex-col  gap-1">
+                  <p className="text-sm text-primary">Lunch</p>
+                  {day.lunch.map((recipe, index) => (
+                    <div className="bg-gray-200 rounded-sm p-2 flex items-center gap-2">
+                      <Avatar>
+                        <AvatarImage
+                          src={
+                            'https://images.unsplash.com/photo-1475856033578-76b4a228f5c5?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+                          }
+                        />
+                        <AvatarFallback>CN</AvatarFallback>
+                      </Avatar>
+                      <p className="text-sm">{recipe.name}</p>
+                    </div>
+                  ))}
+                </div>
+                <div className="bg-white border border-dashed border-gray-400 rounded-lg shadow-sm p-2 flex justify-between flex-col gap-1">
+                  <p className="text-sm text-primary">Snacks</p>
+                  {day.snacks.map((recipe, index) => (
+                    <div className="bg-gray-200 rounded-sm p-2 flex items-center gap-2">
+                      <Avatar>
+                        <AvatarImage
+                          src={
+                            'https://images.unsplash.com/photo-1475856033578-76b4a228f5c5?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+                          }
+                        />
+                        <AvatarFallback>CN</AvatarFallback>
+                      </Avatar>
+                      <p className="text-sm">{recipe.name}</p>
+                    </div>
+                  ))}
+                </div>
+                <div className="bg-white border border-dashed border-gray-400 rounded-lg shadow-sm p-2 flex justify-between flex-col">
+                  <p className="text-sm text-primary">Dinner</p>
+                  {day.dinner.map((recipe, index) => (
+                    <div className="bg-gray-200 rounded-sm p-2 flex items-center gap-2">
+                      <Avatar>
+                        <AvatarImage
+                          src={
+                            'https://images.unsplash.com/photo-1475856033578-76b4a228f5c5?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+                          }
+                        />
+                        <AvatarFallback>CN</AvatarFallback>
+                      </Avatar>
+                      <p className="text-sm">{recipe.name}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
-          </div>
-        ))}
+          )
+        })}
       </div>
     </div>
   )
