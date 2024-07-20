@@ -11,22 +11,26 @@ import {
   PopoverTrigger
 } from '@/components/ui/popover'
 import SearchBar from './SearchBar'
+import { Recipe } from '@/types'
 
 const AddMealModal = () => {
   const [date, setDate] = useState<Date>(new Date())
   const [selectedSlot, setSelectedSlot] = useState<string | null>(null)
   const timeSlots = ['Breakfast', 'Lunch', 'Snacks', 'Dinner']
-
+  const [selectedMeal, setSelectedMeal] = useState<Recipe | null>(null)
   const handleMealSlote = () => {
     const obj = {
       date: date,
       slote: selectedSlot,
-      recipe: {}
+      recipe: selectedMeal
+    }
+    if (obj.slote && obj.recipe && obj.date) {
+      console.log(obj)
     }
   }
 
   return (
-    <div className="p-4">
+    <>
       <div>
         <label
           htmlFor="searchRecipe"
@@ -34,7 +38,7 @@ const AddMealModal = () => {
         >
           Search Recipe
         </label>
-        <SearchBar />
+        <SearchBar origin="meal-plan" setSelectedMeal={setSelectedMeal} />
       </div>
       <div className="mb-4">
         <label
@@ -60,7 +64,7 @@ const AddMealModal = () => {
             <Calendar
               mode="single"
               selected={date}
-              onSelect={setDate}
+              onSelect={setDate as any}
               initialFocus
             />
           </PopoverContent>
@@ -87,9 +91,9 @@ const AddMealModal = () => {
         </div>
       </div>
       <div className="flex justify-end">
-        <Button>Add</Button>
+        <Button onClick={handleMealSlote}>Add</Button>
       </div>
-    </div>
+    </>
   )
 }
 

@@ -11,6 +11,7 @@ import Home from './pages/Home'
 import NotFound from './pages/NotFound'
 import RecipePage from './components/RecipePage'
 import MealPlanner from './pages/MealPlanner'
+import ShoppingList from './pages/ShoppingList'
 
 function App() {
   const routes: RouteObject[] = [
@@ -41,6 +42,10 @@ function App() {
         {
           path: '/meal-plan',
           element: <MealPlanner />
+        },
+        {
+          path: '/shopping-list',
+          element: <ShoppingList />
         },
         {
           path: '*',

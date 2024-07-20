@@ -10,11 +10,12 @@ import {
 import AddMealModal from '@/components/AddMealForm'
 import { Button } from '@/components/ui/button'
 import clsx from 'clsx'
-import { useDispatch } from 'react-redux'
+import { BsDashSquareDotted } from 'react-icons/bs'
 import { useAppDispatch, useAppSelector } from '@/store'
 import { fetchMealPlanData } from '@/store/recipeSlice'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { days } from '@/types'
+import { toast } from 'sonner'
 
 const MealPlanner = () => {
   const mealData = useAppSelector((state) => state.recipe.mealplan)
@@ -50,41 +51,32 @@ const MealPlanner = () => {
   }
   console.log(mealData)
 
+  const handleDeleteMeal = () => {
+    return true
+  }
+
+  const handleShoppingList = () => {
+    toast.success(`Shopping List Genrated Successfully`, {
+      style: { backgroundColor: 'green', color: 'white' }
+    })
+  }
+
   useEffect(() => {
     dispatch(fetchMealPlanData())
   }, [])
-
-  const [calendar, setCalendar] = useState(Array(7).fill(Array(4).fill(null)))
-
-  // const handleAddMeal = (dayIndex, slotIndex) => {
-  //   const newCalendar = calendar.map((day, dIdx) =>
-  //     day.map((meal, mIdx) =>
-  //       dIdx === dayIndex && mIdx === slotIndex ? 'Meal Added' : meal
-  //     )
-  //   )
-  //   setCalendar(newCalendar)
-  // }
-
   const formatDate = (date: Date) => date.toISOString().split('T')[0]
 
   return (
-    <div className="max-w-7xl mx-auto rounded-lg overflow-hidden my-10">
-      <div className="flex items-center justify-between px-4 py-2 border-b border-gray-200">
-        <h2 className="text-lg font-bold text-gray-800">Weekly Meal Planner</h2>
-        <div className="flex gap-2">
-          <Button variant="outline">
-            {`${formatDate(currentWeek.monday)} - ${formatDate(
-              currentWeek.sunday
-            )}`}
-          </Button>
-          <Button variant="outline" onClick={getPrevWeek}>
-            Prev
-          </Button>
-          <Button variant="outline" onClick={getNextWeek}>
-            Next
-          </Button>
+    <div className="max-w-7xl mx-auto rounded-lg overflow-hidden my-10 -z-50">
+      <div className="flex flex-col md:flex-row items-center justify-between px-4 py-2 border-b border-gray-200">
+        <div className="flex gap-4 flex-wrap">
+          <h2 className="text-lg font-bold text-gray-800">
+            Weekly Meal Planner
+          </h2>
+        </div>
+        <div className="space-x-2">
           <Dialog>
-            <DialogTrigger className="px-4 py-2 rounded-sm bg-primary text-sm text-white font-semibold">
+            <DialogTrigger className="w-fit px-4 py-2 rounded-sm bg-primary text-sm text-white font-semibold">
               Add Meal
             </DialogTrigger>
             <DialogContent className="m-4">
@@ -97,7 +89,22 @@ const MealPlanner = () => {
               <AddMealModal />
             </DialogContent>
           </Dialog>
+          <Button onClick={handleShoppingList}>Generate Shopping List</Button>
         </div>
+      </div>
+      <div className="p-4 space-x-2">
+        <Button variant="outline" onClick={getPrevWeek}>
+          Prev
+        </Button>
+        <Button variant="outline">
+          {`${formatDate(currentWeek.monday)} - ${formatDate(
+            currentWeek.sunday
+          )}`}
+        </Button>
+
+        <Button variant="outline" onClick={getNextWeek}>
+          Next
+        </Button>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-4 gap-2 p-4">
         {mealData.map((day, dayIndex) => {
@@ -109,9 +116,8 @@ const MealPlanner = () => {
               className="border rounded-lg shadow-sm bg-gray-50 min-h-[400px]"
             >
               <div className={clsx('bg-gray-200 text-black text-center py-2')}>
-                <h3 className="text-md font-semibold">
-                  {days[dayIndex]} - {formatDate(date)}
-                </h3>
+                <h3 className="text-md font-semibold">{days[dayIndex]}</h3>
+                <p className="text-gray-500 text-sm">{formatDate(date)}</p>
               </div>
               <div className="p-2 space-y-2">
                 <div className="bg-white border border-dashed border-gray-400 rounded-lg shadow-sm p-2 flex justify-between flex-col">
@@ -128,6 +134,10 @@ const MealPlanner = () => {
                         <AvatarFallback>CN</AvatarFallback>
                       </Avatar>
                       <p className="text-sm">{recipe.name}</p>
+                      <BsDashSquareDotted
+                        className="hover:text-red-500 cursor-pointer"
+                        onClick={() => handleDeleteMeal()}
+                      />
                     </div>
                   ))}
                 </div>
