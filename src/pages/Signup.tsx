@@ -52,10 +52,14 @@ function Signup() {
     try {
       const response = await dispatch(signup(signupData)).unwrap()
       console.log(response)
-      toast.success(response.message)
+      toast.success(response.message, {
+        style: { backgroundColor: 'green', color: 'white' }
+      })
 
       if (error.response.status === '400') {
-        toast.error(response.message)
+        toast.error(response.message, {
+          style: { backgroundColor: 'red', color: 'white' }
+        })
       }
       navigate('/')
     } catch (error) {

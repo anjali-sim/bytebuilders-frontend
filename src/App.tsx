@@ -7,6 +7,7 @@ import Layout from './pages/Layout'
 import Home from './pages/Home'
 import NotFound from './pages/NotFound'
 import Preferences from './pages/Preference'
+import Profile from './pages/Profile'
 
 function App() {
   const routes: RouteObject[] = [
@@ -31,6 +32,14 @@ function App() {
           element: <Home />,
         },
         {
+          path: '/preferences',
+          element: <Preferences />,
+        },
+        {
+          path: '/profile',
+          element: <Profile />,
+        },
+        {
           path: '*',
           element: <NotFound />,
         },
@@ -43,7 +52,7 @@ function App() {
   return (
     <>
     <RouterProvider router={router} />
-    <Preferences />
+    {/* <Preferences /> */}
     </>
   )
 }

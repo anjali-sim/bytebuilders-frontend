@@ -3,12 +3,14 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 import counterSlice from './counterSlice'
 import authSlice from './authSlice'
 import userSlice from './userSlice'
+import preferenceSlice from './preferenceSlice'
 
 export const store = configureStore({
   reducer: {
     counter: counterSlice,
     user: userSlice,
-    auth: authSlice
+    auth: authSlice,
+    preferences: preferenceSlice
   }
 })
 

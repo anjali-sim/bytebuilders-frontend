@@ -1,4 +1,7 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { toast } from 'sonner'
+import { useAppDispatch } from '@/store'
 import { Card, CardTitle, CardDescription } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 
@@ -12,6 +15,8 @@ const options = {
 }
 
 function Preferences() {
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const [preferences, setPreferences] = useState({
     diet: [] as string[],
     allergies: [] as string[],
@@ -20,6 +25,7 @@ function Preferences() {
     cookingTime: [] as string[],
     meals: [] as string[]
   })
+
 
   const handleOptionClick = (
     category: keyof typeof preferences,
@@ -38,6 +44,16 @@ function Preferences() {
           [category]: [...currentOptions, option]
         }
       }
+    })
+  }
+
+  const handleSkip = () => {
+    navigate("/home")
+  }
+
+  const handleSubmit = () => {
+    toast.success("User Preferences saved successfully!", {
+      style: { backgroundColor: 'green', color: 'white' }
     })
   }
 
@@ -169,8 +185,8 @@ function Preferences() {
         </div>
 
         <div className="flex justify-end space-x-4">
-          <Button>Skip</Button>
-          <Button>Submit</Button>
+          <Button onClick={handleSkip}>Skip</Button>
+          <Button onClick={handleSubmit}>Submit</Button>
         </div>
       </Card>
     </div>
