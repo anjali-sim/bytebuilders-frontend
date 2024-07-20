@@ -1,5 +1,9 @@
 import './App.css'
-import { createBrowserRouter, RouteObject, RouterProvider } from 'react-router-dom'
+import {
+  createBrowserRouter,
+  RouteObject,
+  RouterProvider
+} from 'react-router-dom'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
 import ProtectedRoute from './routes/ProtectedRoute'
@@ -11,38 +15,38 @@ function App() {
   const routes: RouteObject[] = [
     {
       path: '/login',
-      element: <Login />,
+      element: <Login />
     },
     {
       path: '/signup',
-      element: <Signup />,
+      element: <Signup />
     },
     {
       path: '/',
       element: (
-        <ProtectedRoute>
-          <Layout />
-        </ProtectedRoute>
+        // <ProtectedRoute>
+        <Layout />
+        // </ProtectedRoute>
       ),
       children: [
         {
           path: '/home',
-          element: <Home />,
+          element: <Home />
         },
         {
           path: '*',
-          element: <NotFound />,
-        },
-      ],
-    },
-  ];
-  
-  const router = createBrowserRouter(routes);
+          element: <NotFound />
+        }
+      ]
+    }
+  ]
+
+  const router = createBrowserRouter(routes)
 
   return (
     <>
-    <RouterProvider router={router} />
-    <Login />
+      <RouterProvider router={router} />
+      <Login />
     </>
   )
 }

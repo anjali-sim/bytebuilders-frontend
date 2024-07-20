@@ -1,11 +1,11 @@
 import React from 'react'
 import { Navigate } from 'react-router-dom'
 import { getCookie } from '@/lib/getCookie'
-import { RootState, useAppSelector } from '@/store';
+import { RootState, useAppSelector } from '@/store'
 
 interface ProtectedRouteProps {
-    children: React.ReactNode
-  }
+  children: React.ReactNode
+}
 
 // const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
 //     const token = getCookie('access_token')
@@ -19,13 +19,15 @@ interface ProtectedRouteProps {
 // export default ProtectedRoute
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
-    const isAuthenticated = useAppSelector((state: RootState) => state.auth.isAuthenticated);
-  
-    if (!isAuthenticated) {
-      return <Navigate to="/login" replace />;
-    }
-  
-    return <>{children}</>;
-  };
-  
-  export default ProtectedRoute;
+  const isAuthenticated = useAppSelector(
+    (state: RootState) => state.auth.isAuthenticated
+  )
+
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />
+  }
+
+  return <>{children}</>
+}
+
+export default ProtectedRoute
