@@ -5,11 +5,12 @@ import {
 } from 'react-router-dom'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
-import ProtectedRoute from './routes/ProtectedRoute'
+// import ProtectedRoute from './routes/ProtectedRoute'
 import Layout from './pages/Layout'
 import Home from './pages/Home'
 import NotFound from './pages/NotFound'
 import RecipePage from './components/RecipePage'
+import MealPlanner from './pages/MealPlanner'
 
 function App() {
   const routes: RouteObject[] = [
@@ -25,7 +26,7 @@ function App() {
       path: '/',
       element: (
         // <ProtectedRoute>
-          <Layout />
+        <Layout />
         // </ProtectedRoute>
       ),
       children: [
@@ -36,6 +37,10 @@ function App() {
         {
           path: '/recipe/:id',
           element: <RecipePage />
+        },
+        {
+          path: '/meal-plan',
+          element: <MealPlanner />
         },
         {
           path: '*',

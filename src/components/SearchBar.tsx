@@ -33,7 +33,7 @@ const SearchBar = () => {
   }
 
   return (
-    <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 py-4">
+    <div className="max-w-7xl mx-auto py-4">
       <div className="relative">
         <span className="absolute inset-y-0 left-0 flex items-center pl-3">
           <FaMagnifyingGlass className="text-gray-400" />

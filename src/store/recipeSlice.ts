@@ -7,7 +7,7 @@ interface RecipeState {
 }
 
 const initialState: RecipeState = {
-  recipes: []
+  recipes: JSON.parse(localStorage.getItem('recipe')!) || []
 }
 export const fetchRecipesData = createAsyncThunk<
   Recipe[],
