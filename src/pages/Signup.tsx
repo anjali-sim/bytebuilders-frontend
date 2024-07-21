@@ -40,32 +40,31 @@ function Signup() {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values)
     const { confirmPassword, ...signupData } = values
-    // try {
-    //   const response = await dispatch(signup(values));
-    //   console.log(response);
-    //   // Handle successful signup response here
-    // } catch (error) {
-    //   console.error("Signup failed", error);
-    //   // Handle error response here
-    // }
 
     try {
-      const response = await dispatch(signup(signupData)).unwrap()
-      console.log(response)
+    const response = await dispatch(signup(signupData)).unwrap()
+    // const response = { message: 'sadada' }
+    console.log(response.message)
+    navigate('/')
+    // try {
       toast.success(response.message, {
         style: { backgroundColor: 'green', color: 'white' }
       })
-
-      if (error.response.status === '400') {
-        toast.error(response.message, {
-          style: { backgroundColor: 'red', color: 'white' }
-        })
-      }
-      navigate('/')
-    } catch (error) {
-      console.error('Signup failed', error)
-      // toast.error(error?.message || "Signup failed");
+    } 
+    catch (error) {
+      console.log(error)
     }
+
+    // if (error.response.status === '400') {
+    //   toast.error(response.message, {
+    //     style: { backgroundColor: 'red', color: 'white' }
+    //   })
+    // }
+    navigate('/')
+    // } catch (error) {
+    //   console.error('Signup failed', error)
+    //   // toast.error(error?.message || "Signup failed");
+    // }
   }
   return (
     <div className="h-screen w-screen flex justify-center items-center bg-gray-100">
@@ -75,8 +74,9 @@ function Signup() {
             Sign Up
           </CardTitle>
           <CardDescription className="text-gray-500 mb-6">
-            Please enter your email and password to login.
+            Create Your Signup
           </CardDescription>
+          <CardDescription className="text-gray-500 mb-6"></CardDescription>
         </CardHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -166,6 +166,10 @@ function Signup() {
               <Link to="/login" className="text-primary font-semibold">
                 Login
               </Link>
+            </p>
+            <p className="text-gray-400 text-center">
+              By continuing you indicate that you read and agreed to the Terms
+              of Use
             </p>
           </form>
         </Form>

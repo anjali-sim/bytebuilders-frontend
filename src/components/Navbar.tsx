@@ -13,7 +13,7 @@ const Navbar = () => {
   const { pathname } = useLocation()
 
   return (
-    <nav className=" shadow-lg ">
+    <nav className="bg-white shadow-lg sticky w-full top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           {/* Left side logo */}
@@ -69,17 +69,27 @@ const Navbar = () => {
                 </button>
               </DropdownMenuTrigger>
               <DropdownMenuContent>
-                <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                <Link to="/profile">
+                  <DropdownMenuItem>Profile</DropdownMenuItem>
+                  {/* <div className="flex flex-col md:hidden"> */}
+                </Link>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>Profile</DropdownMenuItem>
-                <DropdownMenuSeparator />
-                {/* <div className="">
+                <Link to="/login">
+                  <DropdownMenuItem>Logout</DropdownMenuItem>
+                </Link>
+                <div className="">
                   <DropdownMenuLabel>Navigation</DropdownMenuLabel>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem>Recipe</DropdownMenuItem>
-                  <DropdownMenuItem>Meal Planner</DropdownMenuItem>
-                  <DropdownMenuItem>Shopping List</DropdownMenuItem>
-                </div> */}
+                  <DropdownMenuItem>
+                    <Link to={'/'}>Recipe</Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <Link to={'/meal-plan'}>Meal Planner</Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <Link to={'/shopping-list'}>Shopping List</Link>
+                  </DropdownMenuItem>
+                </div>
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
