@@ -12,21 +12,32 @@ import {
 } from '@/components/ui/popover'
 import SearchBar from './SearchBar'
 import { Recipe } from '@/types'
+import axiosInstance from '@/utility/api'
+import { API_PATHS } from '@/constants/apiPaths'
 
 const AddMealModal = () => {
   const [date, setDate] = useState<Date>(new Date())
   const [selectedSlot, setSelectedSlot] = useState<string | null>(null)
   const timeSlots = ['Breakfast', 'Lunch', 'Snacks', 'Dinner']
   const [selectedMeal, setSelectedMeal] = useState<Recipe | null>(null)
-  const handleMealSlote = () => {
+  const handleMealSlote = async () => {
     const obj = {
-      date: date,
+      date: date.toISOString().split('T')[0],
       slote: selectedSlot,
       recipe: selectedMeal
     }
     if (obj.slote && obj.recipe && obj.date) {
       console.log(obj)
     }
+
+    try {
+      const response = await axiosInstance.post(API_PATHS.addMeal, {
+        date: obj.date,
+        slote: obj.slote,
+        recipeId: obj.recipe?.id
+      })
+      console.log(response)
+    } catch (error) {}
   }
 
   return (

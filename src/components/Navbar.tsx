@@ -31,7 +31,7 @@ const Navbar = () => {
                   pathname === '/' && 'text-primary'
                 )}
               >
-                Recipe Reccomadation
+                Recipe Recommendation
               </Link>
               <Link
                 to="/meal-plan"
@@ -73,7 +73,7 @@ const Navbar = () => {
                 <div className="flex flex-col md:hidden">
                   <DropdownMenuSeparator />
                   <DropdownMenuItem>
-                    <Link to={'/'}>Recipe</Link>
+                    <Link to={'/'}>Recipe Recommendation</Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem>
                     <Link to={'/meal-plan'}>Meal Planner</Link>

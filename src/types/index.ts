@@ -1,25 +1,26 @@
 export interface Recipe {
-  aggregateLikes: number
-  cookingMinutes: number | null
-  cuisines: string[]
-  dairyFree: boolean
-  diets: string[]
-  dishTypes: string[]
-  glutenFree: boolean
-  healthScore: number
-  occasions: string[]
-  preparationMinutes: number | null
-  readyInMinutes: number
-  servings: number
-  sustainable: boolean
-  vegan: boolean
-  vegetarian: boolean
-  veryHealthy: boolean
-  veryPopular: boolean
-  id: number
-  image: string
-  imageType: string
-  youtubeLink: string[]
+  title?: string
+  aggregateLikes?: number
+  cookingMinutes?: number | null
+  cuisines?: string[]
+  dairyFree?: boolean
+  diets?: string[]
+  dishTypes?: string[]
+  glutenFree?: boolean
+  healthScore?: number
+  occasions?: string[]
+  preparationMinutes?: number | null
+  readyInMinutes?: number
+  servings?: number
+  sustainable?: boolean
+  vegan?: boolean
+  vegetarian?: boolean
+  veryHealthy?: boolean
+  veryPopular?: boolean
+  id?: number
+  image?: string
+  imageType?: string
+  youtubeLink?: string[]
 }
 export enum days {
   'Monday',

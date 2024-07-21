@@ -67,7 +67,7 @@ const RecipePage = () => {
                   </span>
                   {recipe?.preparationMinutes} minutes
                 </span>
-                <span className="mr-4 text-lg flex items-center">
+                <span className="mr-4 text-2xl flex items-center">
                   <span>
                     <FaFire className="mr-1 text-primary" />
                   </span>

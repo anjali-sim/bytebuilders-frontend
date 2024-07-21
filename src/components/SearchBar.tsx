@@ -43,7 +43,7 @@ const SearchBar = ({ origin, setSelectedMeal }: SearchBarProps) => {
     }
 
     const updatedData = recipeData.filter((r) =>
-      r.title.toLowerCase().includes(val.toLowerCase())
+      r.title?.toLowerCase().includes(val.toLowerCase())
     )
     setFilteredRecipes(updatedData)
     setOpen(true)
@@ -77,7 +77,7 @@ const SearchBar = ({ origin, setSelectedMeal }: SearchBarProps) => {
             ref={ref}
             className="max-w-7xl absolute bg-white rounded-b-lg shadow-lg w-full p-2 z-50"
           >
-            <ScrollArea className="max-h-[400px] w-full rounded-md">
+            <ScrollArea className="max-h-[400px] overflow-y-scroll w-full rounded-md">
               {filteredRecipes.map((r) => {
                 return (
                   <div
@@ -92,9 +92,7 @@ const SearchBar = ({ origin, setSelectedMeal }: SearchBarProps) => {
                     </Avatar>
                     <div className="flex flex-col gap-1">
                       <p>{r.title}</p>
-                      <p className="text-gray-400">
-                        dad, asdasd, asdasd,asdasd ,asdasd
-                      </p>
+                      <p className="text-gray-400">{}</p>
                     </div>
                   </div>
                 )

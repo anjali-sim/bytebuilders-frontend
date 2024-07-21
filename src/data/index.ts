@@ -17,19 +17,18 @@ export const recipes = [
     veryHealthy: false,
     veryPopular: true,
     sustainable: false,
-    meta: {
-      aggregateLikes: 150,
-      instructions:
-        'Cook spaghetti. Fry bacon. Mix eggs and cheese. Combine all.',
-      analyzedInstructions:
-        'Step 1: Cook spaghetti. Step 2: Fry bacon. Step 3: Mix eggs and cheese. Step 4: Combine all.',
-      healthScore: 50,
-      preparationMinutes: 10,
-      cookingMinutes: 20,
-      diets: ['Ketogenic'],
-      occasions: ['Dinner'],
-      extendedIngredients: 'Spaghetti, Bacon, Eggs, Cheese, Salt, Pepper'
-    }
+
+    aggregateLikes: 150,
+    instructions:
+      'Cook spaghetti. Fry bacon. Mix eggs and cheese. Combine all.',
+    analyzedInstructions:
+      'Step 1: Cook spaghetti. Step 2: Fry bacon. Step 3: Mix eggs and cheese. Step 4: Combine all.',
+    healthScore: 50,
+    preparationMinutes: 10,
+    cookingMinutes: 20,
+    diets: ['Ketogenic'],
+    occasions: ['Dinner'],
+    extendedIngredients: 'Spaghetti, Bacon, Eggs, Cheese, Salt, Pepper'
   },
   {
     id: 2,
@@ -49,19 +48,18 @@ export const recipes = [
     veryHealthy: false,
     veryPopular: true,
     sustainable: false,
-    meta: {
-      aggregateLikes: 150,
-      instructions:
-        'Cook spaghetti. Fry bacon. Mix eggs and cheese. Combine all.',
-      analyzedInstructions:
-        'Step 1: Cook spaghetti. Step 2: Fry bacon. Step 3: Mix eggs and cheese. Step 4: Combine all.',
-      healthScore: 50,
-      preparationMinutes: 10,
-      cookingMinutes: 20,
-      diets: ['Ketogenic'],
-      occasions: ['Dinner'],
-      extendedIngredients: 'Spaghetti, Bacon, Eggs, Cheese, Salt, Pepper'
-    }
+
+    aggregateLikes: 150,
+    instructions:
+      'Cook spaghetti. Fry bacon. Mix eggs and cheese. Combine all.',
+    analyzedInstructions:
+      'Step 1: Cook spaghetti. Step 2: Fry bacon. Step 3: Mix eggs and cheese. Step 4: Combine all.',
+    healthScore: 50,
+    preparationMinutes: 10,
+    cookingMinutes: 20,
+    diets: ['Ketogenic'],
+    occasions: ['Dinner'],
+    extendedIngredients: 'Spaghetti, Bacon, Eggs, Cheese, Salt, Pepper'
   },
   {
     id: 3,
@@ -81,19 +79,18 @@ export const recipes = [
     veryHealthy: false,
     veryPopular: true,
     sustainable: false,
-    meta: {
-      aggregateLikes: 150,
-      instructions:
-        'Cook spaghetti. Fry bacon. Mix eggs and cheese. Combine all.',
-      analyzedInstructions:
-        'Step 1: Cook spaghetti. Step 2: Fry bacon. Step 3: Mix eggs and cheese. Step 4: Combine all.',
-      healthScore: 50,
-      preparationMinutes: 10,
-      cookingMinutes: 20,
-      diets: ['Ketogenic'],
-      occasions: ['Dinner'],
-      extendedIngredients: 'Spaghetti, Bacon, Eggs, Cheese, Salt, Pepper'
-    }
+
+    aggregateLikes: 150,
+    instructions:
+      'Cook spaghetti. Fry bacon. Mix eggs and cheese. Combine all.',
+    analyzedInstructions:
+      'Step 1: Cook spaghetti. Step 2: Fry bacon. Step 3: Mix eggs and cheese. Step 4: Combine all.',
+    healthScore: 50,
+    preparationMinutes: 10,
+    cookingMinutes: 20,
+    diets: ['Ketogenic'],
+    occasions: ['Dinner'],
+    extendedIngredients: 'Spaghetti, Bacon, Eggs, Cheese, Salt, Pepper'
   },
   {
     id: 3,
@@ -113,19 +110,18 @@ export const recipes = [
     veryHealthy: false,
     veryPopular: true,
     sustainable: false,
-    meta: {
-      aggregateLikes: 150,
-      instructions:
-        'Cook spaghetti. Fry bacon. Mix eggs and cheese. Combine all.',
-      analyzedInstructions:
-        'Step 1: Cook spaghetti. Step 2: Fry bacon. Step 3: Mix eggs and cheese. Step 4: Combine all.',
-      healthScore: 50,
-      preparationMinutes: 10,
-      cookingMinutes: 20,
-      diets: ['Ketogenic'],
-      occasions: ['Dinner'],
-      extendedIngredients: 'Spaghetti, Bacon, Eggs, Cheese, Salt, Pepper'
-    }
+
+    aggregateLikes: 150,
+    instructions:
+      'Cook spaghetti. Fry bacon. Mix eggs and cheese. Combine all.',
+    analyzedInstructions:
+      'Step 1: Cook spaghetti. Step 2: Fry bacon. Step 3: Mix eggs and cheese. Step 4: Combine all.',
+    healthScore: 50,
+    preparationMinutes: 10,
+    cookingMinutes: 20,
+    diets: ['Ketogenic'],
+    occasions: ['Dinner'],
+    extendedIngredients: 'Spaghetti, Bacon, Eggs, Cheese, Salt, Pepper'
   }
 ]
 export const mealPlannerData = [

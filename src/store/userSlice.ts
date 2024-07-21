@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { RootState } from './index'
 import axiosInstance from '@/utility/api'
 import { API_PATHS } from '@/constants/apiPaths'
+import { Recipe } from '@/types'
 
 export interface Preferences {
   diet: string[]
@@ -11,12 +12,16 @@ export interface Preferences {
 export interface UserState {
   username: string
   email: string
+  token: string
   preferences: Preferences
+  bookmarkRecipes: Recipe[]
 }
 
 const initialState: UserState = {
   username: '',
   email: '',
+  token: '',
+  bookmarkRecipes: JSON.parse(localStorage.getItem('bookmarkRecipes')!) || [],
   preferences: {
     diet: [],
     allergies: [],
@@ -24,7 +29,7 @@ const initialState: UserState = {
   }
 }
 
-export const addPreferences = createAsyncThunk(
+export const addPreferences = createAsyncThunk<Preferences, Preferences>(
   'user/addPreferences',
   async (preferences: Preferences, { rejectWithValue }) => {
     try {
@@ -60,10 +65,24 @@ const userSlice = createSlice({
   reducers: {
     setUser: (
       state,
-      action: PayloadAction<{ username: string; email: string }>
+      action: PayloadAction<{ username: string; email: string; token: string }>
     ) => {
       state.username = action.payload.username
       state.email = action.payload.email
+      state.token = action.payload.token
+    },
+    addBookmarkRecipe: (state, action: PayloadAction<Recipe>) => {
+      state.bookmarkRecipes.push(action.payload)
+      localStorage.setItem(
+        'bookmarkRecipes',
+        JSON.stringify(state.bookmarkRecipes)
+      )
+    },
+    removeBookmarkRecipe: (state, action: PayloadAction<Recipe>) => {
+      const index = state.bookmarkRecipes.findIndex(
+        (recipe) => recipe.id === action.payload.id
+      )
+      state.bookmarkRecipes.splice(index, 1)
     },
     clearUser: (state) => {
       state.username = ''
@@ -89,7 +108,13 @@ const userSlice = createSlice({
   }
 })
 
-export const { setUser, clearUser, setPreferences } = userSlice.actions
+export const {
+  setUser,
+  clearUser,
+  setPreferences,
+  addBookmarkRecipe,
+  removeBookmarkRecipe
+} = userSlice.actions
 
 export default userSlice.reducer
 

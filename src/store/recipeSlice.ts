@@ -1,4 +1,5 @@
 import { API_PATHS } from '@/constants/apiPaths'
+import { recipes } from '@/data'
 import { MealPlan, Recipe } from '@/types'
 import axiosInstance from '@/utility/api'
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit'
@@ -23,10 +24,11 @@ export const fetchRecipesData = createAsyncThunk<
   try {
     const response = await axiosInstance.get(API_PATHS.getRecipes)
     console.log(response)
-    if (!response.data.results) {
+    if (!response.data) {
       throw new Error('No meals found')
     }
-    return response.data.results
+    localStorage.setItem('recipes', JSON.stringify(response.data.results))
+    return response.data
   } catch (error) {
     console.error('Error fetching recipes:', error)
     return rejectWithValue('Failed to fetch recipes')
@@ -52,7 +54,7 @@ export const fetchMealPlanData = createAsyncThunk<
     if (!mealPlannerData) {
       throw new Error('No meals found')
     }
-    await new Promise((resolve) => setTimeout(resolve, 2000))
+    // await new Promise((resolve) => setTimeout(resolve, 2000))
     return mealPlannerData
   } catch (error) {
     console.error('Error fetching meal plan:', error)

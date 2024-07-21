@@ -3,6 +3,7 @@ import axiosInstance from '../utility/api'
 import { API_PATHS } from '../constants/apiPaths'
 import { RootState } from './index'
 import { clearUser } from './userSlice'
+import { toast } from 'sonner'
 
 interface SignupData {
   username: string
@@ -37,23 +38,13 @@ export const signup = createAsyncThunk(
   'auth/signup',
   async (userData: SignupData, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.post(
-        API_PATHS.signup,
-        userData
-        // { withoutAuth: true }
-      )
-      const message = response.data.message
-      console.log(message)
-      // const { accessToken, userInfo } = response.data.data
-      // const { message } = response.data.message
-      // dispatch(setUser(userInfo))
-      const { username, email } = response.data.data // Adjust according to your API response
-      return { message, username, email }
-      // return { message }
+      const response = await axiosInstance.post(API_PATHS.signup, userData)
+      console.log(response)
+
+      return response
     } catch (err) {
-      const error = err as { response?: { data?: { message?: string } } }
-      const errorMessage = error.response?.data?.message || 'Signup failed'
-      return rejectWithValue(errorMessage)
+      const error = (err as any)?.response?.data?.message || 'Signup failed'
+      return rejectWithValue(error)
     }
   }
 )
@@ -62,16 +53,9 @@ export const login = createAsyncThunk(
   'auth/login',
   async (loginData: LoginData, { rejectWithValue, dispatch }) => {
     try {
-      const response = await axiosInstance.post(API_PATHS.login, loginData, {
-        // withoutAuth: true
-      })
+      const response = await axiosInstance.post(API_PATHS.login, loginData)
       // const { accessToken, userInfo } = response.data.data
-
-      // document.cookie = `access_token=${accessToken}; path=/;`
-      // dispatch(setUser(userInfo))
-      // return { userInfo }
-      const message = response.data.message
-      console.log(message)
+      return response
     } catch (err) {
       const error = err as { response?: { data?: { message?: string } } }
       const errorMessage = error.response?.data?.message || 'Login failed'

@@ -64,6 +64,7 @@ const MealPlanner = () => {
       style: { backgroundColor: 'green', color: 'white' }
     })
   }
+  console.log(mealData)
 
   useEffect(() => {
     dispatch(fetchMealPlanData(currentWeek.monday.toISOString().split('T')[0]))
@@ -141,7 +142,7 @@ const MealPlanner = () => {
                           />
                           <AvatarFallback>CN</AvatarFallback>
                         </Avatar>
-                        <p className="text-sm">{recipe.name}</p>
+                        <p className="text-sm">{recipe.title}</p>
                         <BsDashSquareDotted
                           className="hover:text-red-500 cursor-pointer"
                           onClick={() => handleDeleteMeal()}
@@ -161,7 +162,11 @@ const MealPlanner = () => {
                           />
                           <AvatarFallback>CN</AvatarFallback>
                         </Avatar>
-                        <p className="text-sm">{recipe.name}</p>
+                        <p className="text-sm">{recipe.title}</p>
+                        <BsDashSquareDotted
+                          className="hover:text-red-500 cursor-pointer"
+                          onClick={() => handleDeleteMeal()}
+                        />
                       </div>
                     ))}
                   </div>
@@ -177,7 +182,7 @@ const MealPlanner = () => {
                           />
                           <AvatarFallback>CN</AvatarFallback>
                         </Avatar>
-                        <p className="text-sm">{recipe.name}</p>
+                        <p className="text-sm">{recipe.title}</p>
                       </div>
                     ))}
                   </div>
@@ -193,7 +198,11 @@ const MealPlanner = () => {
                           />
                           <AvatarFallback>CN</AvatarFallback>
                         </Avatar>
-                        <p className="text-sm">{recipe.name}</p>
+                        <p className="text-sm">{recipe.title}</p>
+                        <BsDashSquareDotted
+                          className="hover:text-red-500 cursor-pointer"
+                          onClick={() => handleDeleteMeal()}
+                        />
                       </div>
                     ))}
                   </div>

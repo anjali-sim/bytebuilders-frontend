@@ -23,6 +23,7 @@ import { useAppDispatch } from '@/store'
 import { signup } from '@/store/authSlice'
 import { formSchema } from '@/constants/schema'
 import { toast } from 'sonner'
+import { setUser } from '@/store/userSlice'
 
 function Signup() {
   const dispatch = useAppDispatch()
@@ -36,35 +37,34 @@ function Signup() {
       confirmPassword: ''
     }
   })
-
   async function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values)
-    const { confirmPassword, ...signupData } = values
-    // try {
-    //   const response = await dispatch(signup(values));
-    //   console.log(response);
-    //   // Handle successful signup response here
-    // } catch (error) {
-    //   console.error("Signup failed", error);
-    //   // Handle error response here
-    // }
+    const { username, email, password } = values
 
     try {
-      const response = await dispatch(signup(signupData)).unwrap()
+      const response: any = await dispatch(
+        signup({ username, email, password })
+      )
       console.log(response)
-      toast.success(response.message, {
-        style: { backgroundColor: 'green', color: 'white' }
-      })
 
-      if (error.response.status === '400') {
-        toast.error(response.message, {
+      if (response.payload.data.status === 'success') {
+        const { token } = response.payload.data.data
+        document.cookie = `access_token=${token}; path=/;`
+        dispatch(setUser({ username, email, token }))
+        toast.success(response.payload.data.data.message, {
+          style: { backgroundColor: 'green', color: 'white' }
+        })
+        navigate('/login')
+      } else {
+        toast.error(response.payload?.data.data.message || 'Signup failed', {
           style: { backgroundColor: 'red', color: 'white' }
         })
       }
-      navigate('/')
     } catch (error) {
       console.error('Signup failed', error)
-      // toast.error(error?.message || "Signup failed");
+      toast.error(error?.message || 'Signup failed', {
+        style: { backgroundColor: 'red', color: 'white' }
+      })
     }
   }
   return (
