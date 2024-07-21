@@ -1,3 +1,5 @@
+import RecipeCard from '@/components/RecipeCard'
+import { recipes } from '@/data'
 import React from 'react'
 import { JSX } from 'react/jsx-runtime'
 
@@ -57,7 +59,12 @@ const parseResponse = (response: any) => {
 }
 
 const RenderedBotContent = ({ content }: { content: any }) => {
-  return (
+  const isRecipe = content.includes('recipeId')
+  const recipeId = isRecipe ? content.slice('_')[1] : undefined
+
+  return isRecipe && recipeId ? (
+    <RecipeCard recipe={recipes[recipeId]} />
+  ) : (
     <div className="react-chatbot-kit-chat-bot-message bg-[#F97316] ">
       <span className="flex flex-col gap-2">
         {parseResponse(content).map((element, index) => {
@@ -70,4 +77,20 @@ const RenderedBotContent = ({ content }: { content: any }) => {
   )
 }
 
-export { parseResponse, RenderedBotContent }
+const RenderedClientContent = ({ content }: { content: any }) => {
+  const isRecipe = content.includes('recipeId')
+  const recipeId = isRecipe ? content.split('_')[1] : undefined
+
+  console.log({ isRecipe, recipeId, content })
+
+  return isRecipe && recipeId ? (
+    <RecipeCard recipe={recipes[recipeId]} />
+  ) : (
+    <div className="react-chatbot-kit-user-chat-message">
+      {content}
+      <div className="react-chatbot-kit-user-chat-message-arrow"></div>
+    </div>
+  )
+}
+
+export { parseResponse, RenderedBotContent, RenderedClientContent }

@@ -1,6 +1,11 @@
 import CustomBotAvatar from '@/components/chat-bot/bot-customs/CustomBotAvatar'
-import { RenderedBotContent } from '@/components/chat-bot/bot-customs/CustomResponseModal'
+import {
+  RenderedBotContent,
+  RenderedClientContent
+  // RenderedClientContent
+} from '@/components/chat-bot/bot-customs/CustomResponseModal'
 import CustomUserAvatar from '@/components/chat-bot/bot-customs/CustomUserAvatar'
+import Overview from '@/components/chat-bot/bot-customs/Overview'
 import { createChatBotMessage } from 'react-chatbot-kit'
 import IConfig from 'react-chatbot-kit/build/src/interfaces/IConfig'
 
@@ -10,23 +15,37 @@ const config: IConfig = {
     botMessageBox: { backgroundColor: '#F97316' },
     chatButton: { backgroundColor: '#F97316' }
   },
-  botName: 'Recipe Remix',
+  botName: 'DeliCook Remix',
   state: {
-    currentRecipe: [{ id: 0, recipe: '' }]
+    currentRecipe: [{ id: 0 }]
   },
   customComponents: {
     botChatMessage(props) {
-      return RenderedBotContent({ content: props.message })
+      return RenderedBotContent({
+        content: props.message
+      })
     },
     userAvatar: CustomUserAvatar,
-    botAvatar: CustomBotAvatar
-  }
+    botAvatar: CustomBotAvatar,
+    userChatMessage(props) {
+      return RenderedClientContent({
+        content: props.message
+      })
+    }
+  },
+  widgets: [
+    {
+      widgetName: 'overview',
+      widgetFunc: Overview,
+      mapStateToProps: ['messages']
+    }
+  ]
 }
 
 const isValidMessage = (message: string) => message !== ''
 
 const InitialMessages = [
-  createChatBotMessage(`Welcome to Recipe Remix! 🍲✨`, {}),
+  createChatBotMessage(`Welcome to DeliCook Remix! 🍲✨`, {}),
   createChatBotMessage(
     "Hi there! I'm your culinary assistant, ready to help you discover and customize delicious recipes. What kind of recipe are you in the mood for today? 🥗🍕🍰",
     {}

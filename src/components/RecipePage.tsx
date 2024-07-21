@@ -13,11 +13,15 @@ import {
   BreadcrumbSeparator
 } from '@/components/ui/breadcrumb'
 import { Card } from './ui/card'
+import { useAppDispatch } from '@/store'
+import { createNewChat } from '@/store/botSlice'
+import { createClientMessage } from 'react-chatbot-kit'
 
 const RecipePage = () => {
   const [recipe, setRecipeInfo] = useState<Recipe | undefined>()
   const [loading, setLoading] = useState(false)
   const { id } = useParams()
+  const dispatch = useAppDispatch()
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,6 +34,14 @@ const RecipePage = () => {
     }
     fetchData()
   }, [id])
+
+  const handleCreateNewChat = () => {
+    dispatch(
+      createNewChat(
+        createClientMessage(`recipeId_${id}`, { widget: 'overview' })
+      )
+    )
+  }
 
   return (
     <div className="max-w-7xl mx-auto p-6">
@@ -153,6 +165,9 @@ const RecipePage = () => {
               })}
             </div>
           </div>
+          <Button className="rounded-full mr-2" onClick={handleCreateNewChat}>
+            Customise With Our Chat Bot
+          </Button>
         </div>
       ) : (
         <div>Loading...</div>
