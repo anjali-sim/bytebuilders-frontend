@@ -7,5 +7,6 @@ export const API_PATHS = {
   editPreferences:
     'https://75014109e230044a16b1fe3440ca24fd.serveo.net/api/user/preferences/edit',
   getRecipes: 'http://172.16.3.68:8000/api/recipe/all',
-  getSingleRecipe: 'http://172.16.3.68:8000/api/recipe'
+  getSingleRecipe: 'http://172.16.3.68:8000/api/recipe',
+  getMealPlan: 'http://172.16.4.15:8000/api/meal/all'
 }

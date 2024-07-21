@@ -3,7 +3,7 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 import authSlice, { AuthState } from './authSlice'
 import userSlice, { UserState } from './userSlice'
 import recipeSlice, { RecipeState } from './recipeSlice'
-import loadingSlice from './loadingSlice'
+import loadingSlice, { LoadingState } from './loadingSlice'
 
 export const store = configureStore({
   reducer: {
@@ -18,6 +18,7 @@ export type RootState = {
   user: UserState
   auth: AuthState
   recipe: RecipeState
+  loading: LoadingState
 }
 
 // export type RootState = ReturnType<typeof store.getState>

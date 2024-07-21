@@ -69,17 +69,19 @@ const Navbar = () => {
                 </button>
               </DropdownMenuTrigger>
               <DropdownMenuContent>
-                <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                <DropdownMenuSeparator />
                 <DropdownMenuItem>Profile</DropdownMenuItem>
-                <DropdownMenuSeparator />
-                {/* <div className="">
-                  <DropdownMenuLabel>Navigation</DropdownMenuLabel>
+                <div className="flex flex-col md:hidden">
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem>Recipe</DropdownMenuItem>
-                  <DropdownMenuItem>Meal Planner</DropdownMenuItem>
-                  <DropdownMenuItem>Shopping List</DropdownMenuItem>
-                </div> */}
+                  <DropdownMenuItem>
+                    <Link to={'/'}>Recipe</Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <Link to={'/meal-plan'}>Meal Planner</Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <Link to={'/shopping-list'}>Shopping List</Link>
+                  </DropdownMenuItem>
+                </div>
               </DropdownMenuContent>
             </DropdownMenu>
           </div>

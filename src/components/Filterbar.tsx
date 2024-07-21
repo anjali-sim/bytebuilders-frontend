@@ -34,6 +34,8 @@ export const Filterbar: React.FC = () => {
     cuisines: []
   })
 
+  console.log(filters)
+
   const handleCheckboxChange = (
     category: keyof FilterOptions,
     option: string
