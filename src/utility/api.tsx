@@ -92,7 +92,6 @@ const baseURL =
 
 const axiosInstance = axios.create({
   baseURL,
-  withoutAuth: false,
   headers: {
     'Content-Type': 'application/json'
   }

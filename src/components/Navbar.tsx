@@ -69,8 +69,16 @@ const Navbar = () => {
                 </button>
               </DropdownMenuTrigger>
               <DropdownMenuContent>
-                <DropdownMenuItem>Profile</DropdownMenuItem>
-                <div className="flex flex-col md:hidden">
+                <Link to="/profile">
+                  <DropdownMenuItem>Profile</DropdownMenuItem>
+                  {/* <div className="flex flex-col md:hidden"> */}
+                </Link>
+                <DropdownMenuSeparator />
+                <Link to="/login">
+                  <DropdownMenuItem>Logout</DropdownMenuItem>
+                </Link>
+                <div className="">
+                  <DropdownMenuLabel>Navigation</DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem>
                     <Link to={'/'}>Recipe Recommendation</Link>

@@ -51,7 +51,7 @@ export const signup = createAsyncThunk(
 
 export const login = createAsyncThunk(
   'auth/login',
-  async (loginData: LoginData, { rejectWithValue, dispatch }) => {
+  async (loginData: LoginData, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.post(API_PATHS.login, loginData)
       // const { accessToken, userInfo } = response.data.data

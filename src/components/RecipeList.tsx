@@ -14,7 +14,7 @@ const RecipeList = () => {
             return <RecipeCard key={recipe.id} recipe={recipe} />
           })
         ) : (
-          <div>Loading.. </div>
+          <div>No recipes found</div>
         )}
       </div>
     </div>
