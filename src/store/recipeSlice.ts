@@ -7,6 +7,7 @@ export interface RecipeState {
   recipes: Recipe[]
   mealplan: MealPlan[]
   isLoading: boolean
+  FiltersState: any
 }
 
 const initialState: RecipeState = {
@@ -21,7 +22,7 @@ const initialState: RecipeState = {
 //   { rejectValue: string }
 // >('recipes/fetchRecipes', async (_, { rejectWithValue }) => {
 //   // const response = await axiosInstance.get(API_PATHS.getRecipes)
-//   // console.log(response)  
+//   // console.log(response)
 //   try {
 //     const response = await axiosInstance.get(API_PATHS.getRecipes)
 //     console.log(response)
@@ -58,7 +59,7 @@ export const fetchRecipesData = createAsyncThunk<
       throw new Error('Network response was not ok')
     }
     const data = response.data.results
-    if (!response.data.results) {
+    if (!data.results) {
       throw new Error('No meals found')
     }
     return response.data.results

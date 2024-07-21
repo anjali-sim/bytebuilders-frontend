@@ -33,7 +33,7 @@ export const addPreferences = createAsyncThunk(
         preferences
       )
       return response.data
-    } catch (error) {
+    } catch (error: any) {
       return rejectWithValue(error.response.data)
     }
   }
@@ -48,7 +48,7 @@ export const editPreferences = createAsyncThunk(
         preferences
       )
       return response.data
-    } catch (error) {
+    } catch (error: any) {
       return rejectWithValue(error.response.data)
     }
   }
