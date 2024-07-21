@@ -40,32 +40,31 @@ function Signup() {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values)
     const { confirmPassword, ...signupData } = values
-    // try {
-    //   const response = await dispatch(signup(values));
-    //   console.log(response);
-    //   // Handle successful signup response here
-    // } catch (error) {
-    //   console.error("Signup failed", error);
-    //   // Handle error response here
-    // }
 
     try {
-      const response = await dispatch(signup(signupData)).unwrap()
-      console.log(response)
+    const response = await dispatch(signup(signupData)).unwrap()
+    // const response = { message: 'sadada' }
+    console.log(response.message)
+    navigate('/')
+    // try {
       toast.success(response.message, {
         style: { backgroundColor: 'green', color: 'white' }
       })
-
-      if (error.response.status === '400') {
-        toast.error(response.message, {
-          style: { backgroundColor: 'red', color: 'white' }
-        })
-      }
-      navigate('/')
-    } catch (error) {
-      console.error('Signup failed', error)
-      // toast.error(error?.message || "Signup failed");
+    } 
+    catch (error) {
+      console.log(error)
     }
+
+    // if (error.response.status === '400') {
+    //   toast.error(response.message, {
+    //     style: { backgroundColor: 'red', color: 'white' }
+    //   })
+    // }
+    navigate('/')
+    // } catch (error) {
+    //   console.error('Signup failed', error)
+    //   // toast.error(error?.message || "Signup failed");
+    // }
   }
   return (
     <div className="h-screen w-screen flex justify-center items-center bg-gray-100">
