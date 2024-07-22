@@ -2,7 +2,10 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { RootState } from './index'
 import axiosInstance from '@/utility/api'
 import { API_PATHS } from '@/constants/apiPaths'
+<<<<<<< HEAD
 import { Recipe } from '@/types'
+=======
+>>>>>>> feature/chat-bot
 
 export interface Preferences {
   diet: string[]
@@ -30,6 +33,7 @@ const initialState: UserState = {
 }
 
 export const addPreferences = createAsyncThunk<Preferences, Preferences>(
+export const addPreferences = createAsyncThunk(
   'user/addPreferences',
   async (preferences: Preferences, { rejectWithValue }) => {
     try {
@@ -39,6 +43,7 @@ export const addPreferences = createAsyncThunk<Preferences, Preferences>(
       )
       return response.data
     } catch (error: any) {
+    } catch (error) {
       return rejectWithValue(error.response.data)
     }
   }
@@ -54,6 +59,7 @@ export const editPreferences = createAsyncThunk(
       )
       return response.data
     } catch (error: any) {
+    } catch (error) {
       return rejectWithValue(error.response.data)
     }
   }
@@ -83,6 +89,10 @@ const userSlice = createSlice({
         (recipe) => recipe.id === action.payload.id
       )
       state.bookmarkRecipes.splice(index, 1)
+      action: PayloadAction<{ username: string; email: string }>
+    ) => {
+      state.username = action.payload.username
+      state.email = action.payload.email
     },
     clearUser: (state) => {
       state.username = ''
@@ -115,6 +125,7 @@ export const {
   addBookmarkRecipe,
   removeBookmarkRecipe
 } = userSlice.actions
+export const { setUser, clearUser, setPreferences } = userSlice.actions
 
 export default userSlice.reducer
 

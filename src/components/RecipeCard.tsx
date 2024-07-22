@@ -42,12 +42,12 @@ const RecipeCard = ({ recipe }: RecipeCardProps) => {
       </div>
       <div className="px-6 py-4">
         <div className="font-bold text-xl mb-2 cursor-pointer">
-          {recipe.title}
+          {recipe.details.title}
         </div>
         <div className="flex gap-4 items-center text-sm mb-4">
           <div className="flex items-center  text-gray-400">
             <FaClock className="mr-1" />
-            <span>{recipe.readyInMinutes} Minutes</span>
+            <span>{recipe.details.readyInMinutes} Minutes</span>
           </div>
           <div className="flex items-center text-gray-400">
             <FaFire className="mr-1" />

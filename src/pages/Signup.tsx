@@ -66,6 +66,17 @@ function Signup() {
         style: { backgroundColor: 'red', color: 'white' }
       })
     }
+
+    // if (error.response.status === '400') {
+    //   toast.error(response.message, {
+    //     style: { backgroundColor: 'red', color: 'white' }
+    //   })
+    // }
+    navigate('/')
+    // } catch (error) {
+    //   console.error('Signup failed', error)
+    //   // toast.error(error?.message || "Signup failed");
+    // }
   }
   return (
     <div className="h-screen w-screen flex justify-center items-center bg-gray-100">

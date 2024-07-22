@@ -12,8 +12,6 @@ import {
 } from '@/components/ui/popover'
 import SearchBar from './SearchBar'
 import { Recipe } from '@/types'
-import axiosInstance from '@/utility/api'
-import { API_PATHS } from '@/constants/apiPaths'
 
 const AddMealModal = () => {
   const [date, setDate] = useState<Date>(new Date())
